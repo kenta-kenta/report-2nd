@@ -1,0 +1,499 @@
+\documentclass{ltjsarticle}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\geometry{left=25mm,right=25mm,top=25mm,bottom=25mm}
+
+\begin{document}
+\title{ダイオードとセンサ}
+\author{平野 健汰}
+\date{\today}
+
+\maketitle
+
+\section{目的}
+発光ダイオードとフォトトランジスタを用いて電流電圧特性を測定することでダイオードの特性を理解し，センサにおける電気的な測定方法の基礎を学ぶ．
+ダイオードを用いて回路を半波整流回路を作製して，交流電流の整流方法を習得する．
+
+\section{理論}
+発光ダイオードはP型とN型の半導体を接合した構造を持つ．
+順方向バイアス時には，P型半導体のホールとN型半導体の電子が再結合してエネルギーを放出する．
+放出される光の周波数(${\nu}$)とハンドギャップエネルギー(${E_g}$)の関係は次の式で表される．
+\begin{equation}
+  E_g = h \nu
+\end{equation}
+ここで，${h}$はプランク定数であり，光速(${c}$)と波長(${\lambda}$)の関係は次の式で表される．
+\begin{equation}
+  c = \lambda \nu
+\end{equation}
+
+一般的な発光ダイオードの電流電圧特性は，図\ref{fig:Diode}に示すように印加電圧がある一定の値を超えるときに急激に電流が増加する特性を持つ．
+そして，光の強さは発光ダイオードに流れる電流値に応じて変化する．
+発光ダイオードに印加される電圧(${V_D}$)と電源電圧(${E}$)の関係は次の式で表される．
+\begin{equation}
+  E = V_D + I_D R
+\end{equation}
+
+図\ref{fig:Diode}に示す電流電圧特性と式(3)との交点を(${V_1 , I_1}$)とすると発光ダイオードで消費されるエネルギーは${V_1 I_1}$ で表される．
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.30\columnwidth]{figs/Diode.png}
+  \caption{ダイオードの電流電圧特性}
+  \label{fig:Diode}
+\end{figure}
+
+フォトトランジスタは，光を検出するフォトダイオードとトランジスタを組み合わせた素子である．
+フォトダイオードは，P型とN型半導体の接合によって形成されるP-N接合部に光が照射されることで，電子と正孔が生成され，光の強度に比例した電流が流れる．
+一方，トランジスタには，電流増幅作用があり，フォトダイオードの小さな電流を増幅することができる．
+フォトトランジスタでは，受光した光の強度に応じて流れる電流が変化し，高感度な光検出が可能である．
+この構造は一般的にコレクタとエミッタの2端子で動作する．
+電流はエミッタ電極とGNDの間に抵抗${R}$を接続し，この抵抗に印加される電圧${V}$を測定することで，式(4)より求めることができる．
+\begin{equation}
+  I_F = \frac{V_R}{R}
+\end{equation}
+
+ダイオードは電流を一方向にのみ通す性質があり，半波整流回路では，交流電流を直流電流に変換することができる．
+抵抗に並列にキャパシタンスが接続されると，正の電圧が印加されている間にキャパシタンスが充電され，電圧が印加されていないときに放電される．
+そうすることで直流電圧として取り出すことができる．
+しかし，交流の名残のような波形(リップル)が残る．
+このリップル率${r}$は次のように定義される．
+\begin{equation}
+  r = \frac{{\text{交流電圧の実効値}}}{{\text{直流電圧}}} \times 100
+\end{equation}
+
+\section{使用器具}
+\begin{itemize}
+  \item 発光ダイオード(赤，黄色，緑，赤外)
+  \item フォトトランジスタ
+  \item 抵抗(47 Ω，100 Ω，220 Ω，470 Ω)
+  \item キャパシタンス(4.7 µF，10 µF，100 µF，470 µF)
+  \item NI ELVIS
+\end{itemize}
+
+\section{実験}
+\subsection{実験方法}
+\subsubsection{発光ダイオードの電流電圧測定}
+\begin{itemize}
+  \item 発光ダイオードの準備
+  \begin{itemize}
+    \item 赤，黄色，緑，赤外の発光ダイオードを用意した．
+    \item 各ダイオードのアノード（正極）とカソード（負極）を確認した．  
+  \end{itemize}
+  \item 測定装置の設定
+  \begin{itemize}
+    \item NI ELVIS を起動し，電流電圧特性を測定するモードに設定した．
+    \item 印加電圧の範囲を${-2.5 V}$ から${+2.5 V}$ に設定した．
+    \item 電源リミットを${-30 mA}$ から${+30 mA}$ に設定した．
+  \end{itemize}
+  \item 測定手順
+  \begin{itemize}
+    \item 各発光ダイオードを順方向に接続し，電圧を徐々に増加させて電流値を測定した．
+    \item 今回使用した発光ダイオードは赤の発光ダイオードである．これは班内で重複しないように選択した結果である．
+    \begin{itemize}
+      \item 順方向バイアス時に発光することを確認した．
+    \end{itemize}
+    \item 逆方向にも電圧を印加し，逆方向電流が流れないことを確認した．
+  \end{itemize}
+  \item データの保存
+  \begin{itemize}
+    \item 測定結果をファイルに出力し，適切なフォルダに保存した．
+  \end{itemize}
+  \item 安全上の注意
+  \begin{itemize}
+    \item 発光ダイオードの損傷を防ぐため，設定した電圧・電流の範囲を超えないように注意した．
+    \item 測定中は回路の接続を確認し，誤った接続をしないように注意した． 
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{発光ダイオード駆動回路の作製}
+\begin{itemize}
+  \item 回路構成
+  \begin{itemize}
+    \item 赤外発光ダイオードを使用した．
+    \item 発光ダイオードと抵抗を直列に接続した．
+    \item 使用する抵抗値は班員それぞれが異なる値を選択した．
+    \begin{itemize}
+      \item 47 Ω
+      \item 100 Ω
+      \item 220 Ω
+      \item 470 Ω
+    \end{itemize}
+    \item 今回使用した抵抗値は 47 Ω である．これは班内で重複しないように選択した結果である．
+  \end{itemize}
+
+  \item 測定手順
+  \begin{itemize}
+    \item 電源電圧を0 Vから徐々に増加させた．
+    \item 抵抗両端の電圧（$V_R$）を測定した．
+    \item オームの法則を用いて電流値を算出した．
+    \item 発光ダイオードにかかる電圧は式(3)に従って計算した．
+  \end{itemize}
+  \item 注意事項
+  \begin{itemize}
+    \item 電流値が30 mAを超えないように電源電圧を調整した．
+    \item 発光ダイオードの順方向接続を確認した．
+    \item 測定値は適宜記録した．
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{赤外光検出回路の作製}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.50\columnwidth]{figs/phototransistorSircuit.png}
+  \caption{赤外光検出回路}
+\end{figure}
+\begin{itemize}
+  \item 回路構成
+  \begin{itemize}
+    \item フォトトランジスタを発光ダイオードに対面するように配置した．
+    \item フォトトランジスタと2.2 kΩ抵抗を使用して図3.8の回路を作製した．
+    \item フォトトランジスタの接続
+      \begin{itemize}
+        \item 足の長い方を抵抗側に接続
+        \item 足の短い方を電源の+側(5 V)に接続
+      \end{itemize}
+    \item 電源電圧は5 V(一定)に設定した．
+  \end{itemize}
+  \item 測定手順
+  \begin{itemize}
+    \item 4.1.2 で作製した発光ダイオード駆動回路を使用した．
+    \item 発光ダイオードの電流を0から徐々に増加させた．
+    \item フォトトランジスタ回路の抵抗両端の電圧を測定した．
+    \item オームの法則を用いてフォトトランジスタに流れる電流を算出した．
+  \end{itemize}
+  \item 注意事項
+  \begin{itemize}
+    \item 発光ダイオードの電流は最大30 mAを超えないようにした．
+    \item フォトトランジスタは発光ダイオードにできるだけ近づけて配置した．
+    \item フォトトランジスタの極性を間違えないよう注意した．
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{半波整流回路の作製}
+\begin{itemize}
+  \item 回路構成
+  \begin{itemize}
+    \item 図3.6を参考に赤外光用フォトダイオードを使用した半波整流回路を作製した．
+    \item 使用する素子
+      \begin{itemize}
+        \item 抵抗: 470 Ω
+        \item キャパシタンス: 4.7 µF, 10 µF, 100 µF, 470 µF
+      \end{itemize}
+  \end{itemize}
+  \item 測定装置の設定
+  \begin{itemize}
+    \item ファンクションジェネレータ
+      \begin{itemize}
+        \item 波形: 正弦波
+        \item 電圧: $V_{pp}$ = 8 V
+        \item 周波数: 60 Hz
+      \end{itemize}
+    \item オシロスコープを準備した
+  \end{itemize}
+  \item 測定手順
+  \begin{itemize}
+    \item 各キャパシタンスについて以下の測定を行った:
+      \begin{itemize}
+        \item 抵抗両端の電圧波形をオシロスコープで観測
+        \item 抵抗にかかる直流電圧を測定
+        \item 抵抗にかかる交流電圧の実効値を測定
+      \end{itemize}
+    \item すべてのキャパシタンスで測定を繰り返した
+  \end{itemize}
+  \item 記録事項
+  \begin{itemize}
+    \item 各キャパシタンス値での波形を記録
+    \item 直流電圧値の記録
+    \item 交流電圧実効値の記録
+  \end{itemize}
+\end{itemize}
+
+\subsection{結果}
+\subsubsection{発光ダイオードの電流電圧特性}
+発光ダイオードの電流電圧特性を以下に示す．
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=10cm]{figs/LightEmittingDiode.png}
+    \caption{発光ダイオードの電流電圧特性}
+  \end{center}
+\end{figure}
+
+\subsubsection{発光ダイオード駆動回路の作製}
+発光ダイオードにかかる電圧${V_D}$，発光ダイオードに流れる電流${I}$の測定結果を以下に示す．
+\begin{table}[H]
+  \begin{minipage}[t]{0.24\hsize}
+    \vspace{0pt}
+    \begin{tabular}{|r|r|}
+      \hline
+      \multicolumn{2}{|c|}{10 ${\Omega}$} \\ \hline
+      ${V_D[V]}$ & ${I[A]}$ \\
+      \hline
+      0.99 & 1.77 ${\times}$ 10${^{-4}}$ \\
+      1.06 & 8.51 ${\times}$ 10${^{-4}}$ \\
+      1.10 & 2.13 ${\times}$ 10${^{-3}}$ \\
+      1.12 & 3.81 ${\times}$ 10${^{-3}}$ \\
+      1.14 & 5.60 ${\times}$ 10${^{-3}}$ \\
+      1.15 & 7.53 ${\times}$ 10${^{-3}}$ \\
+      1.16 & 1.15 ${\times}$ 10${^{-2}}$ \\
+      1.18 & 1.54 ${\times}$ 10${^{-2}}$ \\
+      1.18 & 1.74 ${\times}$ 10${^{-2}}$ \\
+      1.20 & 2.34 ${\times}$ 10${^{-2}}$ \\
+      1.21 & 2.74 ${\times}$ 10${^{-2}}$ \\
+      1.22 & 3.15 ${\times}$ 10${^{-2}}$ \\
+      1.23 & 3.77 ${\times}$ 10${^{-2}}$ \\
+      1.68 & 3.87 ${\times}$ 10${^{-2}}$ \\
+      2.18 & 3.87 ${\times}$ 10${^{-2}}$ \\ \hline
+\end{tabular}
+  \caption{47 ${\Omega}$}
+\end{minipage}
+\begin{minipage}[t]{0.24\hsize}
+  \vspace{0pt}
+  \begin{tabular}{|r|r|}
+    \hline
+    \multicolumn{2}{|c|}{100 ${\Omega}$} \\ \hline
+    ${V_D[V]}$ & ${I[A]}$ \\
+    \hline
+    0.98 & 1.80 ${\times}$ 10${^{-4}}$ \\
+    1.03 & 6.53 ${\times}$ 10${^{-4}}$ \\
+    1.07 & 1.29 ${\times}$ 10${^{-3}}$ \\
+    1.09 & 2.14 ${\times}$ 10${^{-3}}$ \\
+    1.11 & 2.95 ${\times}$ 10${^{-3}}$ \\
+    1.11 & 3.86 ${\times}$ 10${^{-3}}$ \\
+    1.12 & 4.85 ${\times}$ 10${^{-3}}$ \\
+    1.12 & 5.76 ${\times}$ 10${^{-3}}$ \\
+    1.13 & 6.68 ${\times}$ 10${^{-3}}$ \\
+    1.14 & 8.58 ${\times}$ 10${^{-3}}$ \\
+    1.15 & 1.05 ${\times}$ 10${^{-2}}$ \\
+    1.16 & 1.24 ${\times}$ 10${^{-2}}$ \\
+    1.17 & 1.33 ${\times}$ 10${^{-2}}$ \\
+    1.16 & 1.44 ${\times}$ 10${^{-2}}$ \\
+    1.17 & 1.63 ${\times}$ 10${^{-2}}$ \\
+    1.18 & 1.82 ${\times}$ 10${^{-2}}$ \\
+    1.19 & 2.11 ${\times}$ 10${^{-2}}$ \\
+    1.19 & 2.31 ${\times}$ 10${^{-2}}$ \\
+    1.19 & 2.51 ${\times}$ 10${^{-2}}$ \\
+    1.21 & 2.79 ${\times}$ 10${^{-2}}$ \\
+    1.21 & 2.99 ${\times}$ 10${^{-2}}$ \\ \hline
+\end{tabular}
+  \caption{100 ${\Omega}$}
+\end{minipage}
+  \begin{minipage}[t]{0.24\hsize}
+    \vspace{0pt}
+    \begin{tabular}{|r|r|}
+      \hline
+      \multicolumn{2}{|c|}{220 ${\Omega}$} \\ \hline
+      ${V_D[V]}$ & ${I[A]}$ \\
+      \hline
+      0.97 & 1.27 ${\times}$ 10${^{-4}}$ \\
+      1.02 & 3.64 ${\times}$ 10${^{-4}}$ \\
+      1.05 & 6.73 ${\times}$ 10${^{-4}}$ \\
+      1.07 & 1.05 ${\times}$ 10${^{-3}}$ \\
+      1.08 & 1.44 ${\times}$ 10${^{-3}}$ \\
+      1.09 & 1.85 ${\times}$ 10${^{-3}}$ \\
+      1.11 & 2.70 ${\times}$ 10${^{-3}}$ \\
+      1.12 & 3.98 ${\times}$ 10${^{-3}}$ \\
+      1.14 & 6.18 ${\times}$ 10${^{-3}}$ \\
+      1.15 & 8.41 ${\times}$ 10${^{-3}}$ \\
+      1.16 & 1.06 ${\times}$ 10${^{-2}}$ \\
+      1.17 & 1.29 ${\times}$ 10${^{-2}}$ \\
+      1.18 & 1.74 ${\times}$ 10${^{-2}}$ \\
+      1.19 & 2.19 ${\times}$ 10${^{-2}}$ \\
+      1.20 & 2.64 ${\times}$ 10${^{-2}}$ \\
+      1.21 & 3.09 ${\times}$ 10${^{-2}}$ \\ \hline
+  \end{tabular}
+  \caption{220 ${\Omega}$}
+\end{minipage}
+\begin{minipage}[t]{0.24\hsize}
+  \vspace{0pt}
+  \begin{tabular}{|r|r|}
+    \hline
+    \multicolumn{2}{|c|}{470 ${\Omega}$} \\ \hline
+    ${V_D[V]}$ & ${I[A]}$ \\
+    \hline
+    0.96 & 9.32 ${\times}$ 10${^{-5}}$ \\
+    1.00 & 2.19 ${\times}$ 10${^{-4}}$ \\
+    1.02 & 3.79 ${\times}$ 10${^{-4}}$ \\
+    1.05 & 7.43 ${\times}$ 10${^{-4}}$ \\
+    1.06 & 9.30 ${\times}$ 10${^{-4}}$ \\
+    1.08 & 1.33 ${\times}$ 10${^{-3}}$ \\
+    1.09 & 1.93 ${\times}$ 10${^{-3}}$ \\
+    1.10 & 2.34 ${\times}$ 10${^{-3}}$ \\
+    1.11 & 2.96 ${\times}$ 10${^{-3}}$ \\
+    1.12 & 3.36 ${\times}$ 10${^{-3}}$ \\
+    1.13 & 3.98 ${\times}$ 10${^{-3}}$ \\
+    1.13 & 4.40 ${\times}$ 10${^{-3}}$ \\
+    1.14 & 5.02 ${\times}$ 10${^{-3}}$ \\
+    1.14 & 6.09 ${\times}$ 10${^{-3}}$ \\
+    1.16 & 8.17 ${\times}$ 10${^{-3}}$ \\
+    1.17 & 1.03 ${\times}$ 10${^{-2}}$ \\
+    1.20 & 1.45 ${\times}$ 10${^{-2}}$ \\
+    1.22 & 1.87 ${\times}$ 10${^{-2}}$ \\
+    1.24 & 2.29 ${\times}$ 10${^{-2}}$ \\
+    1.27 & 2.71 ${\times}$ 10${^{-2}}$ \\
+    1.28 & 2.92 ${\times}$ 10${^{-2}}$ \\ \hline
+\end{tabular}
+  \caption{470 ${\Omega}$}
+\end{minipage}
+\end{table}
+
+\subsubsection{赤外光検出回路の作製}
+発光ダイオードに流れる電流${I_D}$，抵抗の両端の電圧${V_R}$，フォトトランジスタに流れる電流${I_F}$の測定結果を以下に示す．
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|r|r|r|}
+    \hline
+    ${I_D}$ [${A}$] & ${V_R}$ [${V}$] & ${I_F}$ [${A}$] \\
+    \hline
+    1.7 ${\times}$ 10${^{-4}}$ & 6.10 ${\times}$ 10${^{-2}}$ & 2.77 ${\times}$ 10${^{-5}}$ \\
+    8.5 ${\times}$ 10${^{-4}}$ & 7.90 ${\times}$ 10${^{-1}}$ & 3.59 ${\times}$ 10${^{-4}}$ \\
+    2.1 ${\times}$ 10${^{-3}}$ & 3.28 & 1.49 ${\times}$ 10${^{-3}}$ \\
+    3.8 ${\times}$ 10${^{-3}}$ & 4.68 & 2.13 ${\times}$ 10${^{-3}}$ \\
+    5.6 ${\times}$ 10${^{-3}}$ & 4.77 & 2.19 ${\times}$ 10${^{-3}}$ \\
+    7.5 ${\times}$ 10${^{-3}}$ & 4.82 & 2.18 ${\times}$ 10${^{-3}}$ \\
+    1.1 ${\times}$ 10${^{-2}}$ & 4.80 & 2.18 ${\times}$ 10${^{-3}}$ \\
+    1.7 ${\times}$ 10${^{-2}}$ & 4.89 & 2.22 ${\times}$ 10${^{-3}}$ \\ \hline
+  \end{tabular}
+  \caption{赤外光検出回路の測定結果}
+\end{table}
+
+\subsubsection{半波整流回路の作製}
+キャパシタごとの電圧波形を以下に示す．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.95\columnwidth]{figs/4.7.png}
+  \caption{半波整流回路の波形(${4.7 \mu F}$)}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.95\columnwidth]{figs/10.png}
+  \caption{半波整流回路の波形(${10 \mu F}$)}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.95\columnwidth]{figs/100.png}
+  \caption{半波整流回路の波形(${100 \mu F}$)}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.95\columnwidth]{figs/470.png}
+  \caption{半波整流回路の波形(${470 \mu F}$)}
+\end{figure}
+
+\subsection{課題}
+\subsubsection{基本課題(1)}
+発光ダイオードが消費するエネルギーは，順方向バイアス時に流れる電流と電圧の積で表される．
+実験 4.1.1 で測定された電流電圧特性のグラフより，10 mA の電流が流れるときの印加電圧と消費エネルギーを求めると，以下のようになった．
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|r|r|}
+    \hline
+    発光ダイオード & 印加電圧 [V] & 消費エネルギー [J] \\
+    \hline
+    赤 & 1.92 & 19.2 \\
+    黄色 & 2.02 & 20.2 \\
+    緑 & 2.11 & 21.1 \\
+    赤外 & 1.18 & 11.8 \\
+    \hline
+  \end{tabular}
+\end{table}
+消費エネルギーとバンドギャップエネルギーの大小関係は等しいので，バンドギャップエネルギーが小さい順に並べると，赤外，赤，黄色，緑となる．
+
+また，バンドギャップエネルギー${E_g}$は，プランク定数${h}$と光速${c}$，波長${\lambda}$の関係から次のように求められる．
+
+\begin{equation}
+  E_g = \frac{hc}{\lambda}
+\end{equation}
+
+つまり，バンドギャップエネルギーは波長の逆数に比例する．したがって，波長が小さい順に並べると，緑，黄色，赤，赤外となる．
+
+\subsubsection{基本課題(2)}
+実験 4.1.2 で測定した電流電圧特性をグラフに示すと以下のようになった．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.70\columnwidth]{figs/LEDDriveSircuit.png}
+  \caption{発光ダイオード駆動回路}
+\end{figure}
+
+\subsubsection{基本課題(3)}
+実験 4.1.3 で測定した発光ダイオードに流れる電流とフォトトランジスタに流れる電流の関係をグラフに示すと以下のようになった．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.70\columnwidth]{figs/phototransistor.png}
+  \caption{発光ダイオードとフォトトランジスタの電流}
+\end{figure}
+
+\subsubsection{基本課題(4)}
+実験 4.1.4 で測定した直流電圧及び交流電圧の実効値を用いてリップル率を求めた結果，以下のようになった．
+
+リップル率は，以下の式で求められる．
+\begin{equation}
+  r = \frac{{\text{交流電圧の実効値}}}{{\text{直流電圧}}} \times 100
+\end{equation}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|r|r|}
+    \hline
+    キャパシタンス & リップル率 \\
+    \hline
+    4.7 ${\mu F}$ & 97.3 \\
+    10 ${\mu F}$ & 83.9 \\
+    100 ${\mu F}$ & 14.0 \\
+    470 ${\mu F}$ & 2.92 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+また，${CR}$値とリップル率${r}$の関係をグラフに表すと以下のようになった．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.70\columnwidth]{figs/CR_rippleRate.png}
+  \caption{リップル率と${CR}$値の関係}
+\end{figure}
+
+以上から，リップル率は抵抗が同じ場合，キャパシタンスが大きいほど小さくなることがわかる．
+リップル率が小さいと安定した電流を得ることができるので，キャパシタンスが大きいほど良いといえる．
+
+\subsubsection{応用課題(1)}
+実験 4.1.1 で測定した赤外光発光ダイオードの電流電圧特性と実験 4.1.2 で測定した赤外光検出回路の電流電圧特性を比較すると，以下のようになった．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.70\columnwidth]{figs/LEDAndDriveSircuit.png}
+  \caption{赤外光発光ダイオードと赤外光検出回路の電流電圧特性}
+\end{figure}
+
+以上のグラフより，発光ダイオードの電流電圧特性とフォトトランジスタの電流電圧特性は，ほぼ同じであることがわかる．
+
+\subsubsection{応用課題(2)}
+実験 4.1.3 で述べたフォトトランジスタの電極を逆にすると光が当たっても電流が流れない理由を述べる．
+
+フォトトランジスタは主にNPN構造を持っており，中間のP型半導体に光が照射されるとP型半導体の電子が励起され，コレクタ側のN型半導体に移動し，ベース領域のP型半導体には正孔が残る．
+つまり，この正孔によってエミッタ側から流れてきた電子がベースを通ってコレクタ側のN型半導体に移動する．そして電子が回路を通ることができる．
+しかし，電極を逆にすると電子の流れる向きが逆になり，電子と正孔の移動が制限されるため電流が流れない．
+
+\subsubsection{応用課題(3)}
+全波整流回路を用いて交流電流を整流する方法について述べる．
+全波整流回路を図示すると以下のようになる．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.70\columnwidth]{figs/FullWaveCurrentCircuit.png}
+  \caption{全波整流回路\cite{zenha}}
+\end{figure}
+
+半波整流回路と比較したときの利点と欠点を述べる．
+全波整流回路はダイオードをブリッジ状に回路構成することで，入力電圧の負電圧分を正電圧に変換整流し直流電圧にする．
+半波整流回路ではダイオード1つで入力負電圧分を消去し，正電圧のみを直流電圧に変換する．
+
+つまり，半波整流回路は正電圧のみを変換するが，全波整流回路は正電圧，負電圧も変換することができるのでキャパシタンス，抵抗に同じものを使用した場合は全波整流回路の方が単純計算で2倍効率が良いといえる．
+ただし，全波整流回路はダイオードを4つ使用するためコストがかかることを考慮する必要がある．
+
+\begin{thebibliography}{99}
+  \bibitem{text} \text{【基礎実験】3.ダイオードとセンサ\_2023\_2.pdf}
+  \bibitem{documen} ダイオードとセンサ 説明資料
+  \bibitem{zenha} \url{https://www.rohm.co.jp/electronics-basics/ac-dc-converters/acdc_what2}
+\end{thebibliography}
+
+\end{document}

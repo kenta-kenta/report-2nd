@@ -1,0 +1,27 @@
+# TeXの中間ファイル/出力ファイル
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.dvi
+*.bbl
+*.blg
+*.pdf
+
+# エディタの一時ファイル
+*~
+*.swp
+.DS_Store
+
+# 追跡対象から除外するフォルダ
+/*
+
+# 追跡対象として含めるファイル/フォルダ
+!*.tex
+!src/
+!.gitignore
