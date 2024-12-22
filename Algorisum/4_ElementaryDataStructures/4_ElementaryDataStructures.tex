@@ -1,0 +1,784 @@
+\documentclass{ltjsarticle}
+\usepackage{listings}
+\usepackage{url}
+
+\begin{document}
+
+\title{データ構造とアルゴリズム演習}
+\author{1TE23035E 平野 健汰}
+\date{\today}
+
+\maketitle
+
+はじめに今回作成したコードはgithubにアップロードしています．以下のリンクからアクセスできます．
+\begin{verbatim}
+  https://github.com/kenta-kenta/clang-algorithm
+\end{verbatim}
+
+\part{Stack and Queue}
+
+\section{Stack}
+\subsection{概略}
+PushとPopの操作を行うデータ構造．LIFO(Last In First Out)の原則に従う．
+
+\subsection{仕様}
+
+\noindent stachEmpty：スタックが空かどうかを判定する．
+
+\noindent stackFull：スタックが満杯かどうかを判定する．
+
+\noindent Push：スタックに要素を追加する．
+
+\noindent Pop：スタックから要素を取り出す．
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+  // 空のスタックを作成
+  int stackEmpty(int top)
+  {
+      if (top == 0)
+      {
+          return 1;
+      }
+      else
+      {
+          return 0;
+      }
+  }
+  
+  // スタックが満杯かどうかを判定
+  int stackFull(int top)
+  {
+      if (top == 9)
+      {
+          return 1;
+      }
+      else
+      {
+          return 0;
+      }
+  }
+  
+  // スタックに要素を追加
+  void push(int arr[], int x, int *top)
+  {
+      if (stackFull(*top) == 1)
+      {
+          printf("error: stack overflow\n");
+      }
+      else
+      {
+          *top = *top + 1;
+          arr[*top] = x;
+      }
+  }
+  
+  // スタックから要素を取り出す
+  int pop(int arr[], int *top)
+  {
+      if (stackEmpty(*top) == 1)
+      {
+          printf("error: stack underflow\n");
+          return -1;
+      }
+      else
+      {
+          *top = *top - 1;
+          return arr[*top + 1];
+      }
+  }
+  
+  void main()
+  {
+      int arr[10];
+      int top = 0;
+      for (int i = 1; i < 11; i++)
+      {
+          push(arr, i, &top);
+      }
+      for (int i = 1; i < 11; i++)
+      {
+          printf("%d\n", pop(arr, &top));
+      }
+  }
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，スタックを実装したものである．
+今回のスタックは配列を利用して作成されており，スタックの要素数は10個である．
+スタックの先頭は0であり，スタックが空の状態を示す．
+スタックの最後尾は9であり，スタックが満杯の状態を示す．
+スタックに要素を追加する際は，topの値を1増やし，その位置に要素を追加する．
+スタックから要素を取り出す際は，topの値を1減らし，その位置の要素を取り出す．
+要素数より多い要素を追加，または空のスタックから要素を取り出そうとすると，stack overflowとなり，そのエラーが表示される．
+
+\subsection{まとめ}
+スタックは，LIFO(Last In First Out)の原則に従うデータ構造である．
+このプログラムは，スタックを配列を用いて実装したものである．
+今回作成したプログラムではスタックを配列を利用して作成しているが，構造体を用いて作成することも可能であると考えられる．
+配列を利用した場合と構造体を利用した場合で比較して考えてみる．
+
+配列で実装する場合は，メモリが連続しているためアクセスが高速で実装が単純になるという利点がある．
+一方で，サイズが固定されているため，拡張が難しいという欠点がある．
+
+構造体で実装する場合は，必要に応じてノードを追加・削除できるため柔軟に対応できるという利点がある．
+一方で，動的なメモリ割り当てが必要となり，実装が複雑になるという欠点がある．
+
+以上のことを踏まえて実装する必要があると考える．
+小規模な用途であれば配列が利用される場合が多く，大規模な用途であれば構造体が利用される場合が多いと考えられる．
+
+\section{Queue}
+\subsection{概略}
+EnqueueとDequeueの操作を行うデータ構造．FIFO(First In First Out)の原則に従う．
+
+\subsection{仕様}
+\noindent enqueue：キューに要素を追加する．
+
+\noindent dequeue：キューから要素を取り出す．
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+  // キューに要素を追加
+  void enqueue(int arr[], int x, int *tail)
+  {
+      if (*tail == 10)
+      {
+          printf("error: stack overflow\n");
+      }
+      else
+      {
+          arr[*tail] = x;
+          *tail = *tail + 1;
+      }
+  }
+  
+  // キューから要素を取り出す
+  int dequeue(int arr[], int *head)
+  {
+      int x = arr[*head];
+      if (*head == 10)
+      {
+          printf("error: stack underflow\n");
+          return -1;
+      }
+      else
+      {
+          *head = *head + 1;
+      }
+      return x;
+  }
+  
+  void main()
+  {
+      int arr[10];
+      int tail = 0;
+      int head = 0;
+      for (int i = 1; i < 12; i++)
+      {
+          enqueue(arr, i, &tail);
+      }
+      for (int i = 1; i < 12; i++)
+      {
+          printf("%d\n", dequeue(arr, &head));
+      }
+  }
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，キューを実装したものである．
+今回のキューは配列を利用して作成されており，キューの要素数は10個である．
+キューの先頭は0であり，キューが空の状態を示す．
+キューの最後尾は9であり，キューが満杯の状態を示す．
+キューに要素を追加する際は，tailの値を1増やし，その位置に要素を追加する．
+キューから要素を取り出す際は，headの値を1増やし，その位置の要素を取り出す．
+要素数より多い要素を追加，または空のキューから要素を取り出そうとすると，stack overflowとなり，そのエラーが表示される．
+
+\subsection{まとめ}
+キューは，FIFO(First In First Out)の原則に従うデータ構造である．
+このプログラムは，キューを配列を用いて実装したものである．
+スタックと同様に，キューも構造体を用いて作成することも可能であると考えられる．
+配列を利用した場合と構造体を利用した場合で比較して考えてみる．
+
+配列で実装する場合は，メモリが連続しているためアクセスが高速で実装が単純になるという利点がある．
+一方で，サイズが固定されているため，拡張が難しいという欠点がある．
+
+構造体で実装する場合は，必要に応じてノードを追加・削除できるため柔軟に対応できるという利点がある．
+一方で，動的なメモリ割り当てが必要となり，実装が複雑になるという欠点がある．
+
+以上のことを踏まえて実装する必要があると考える．
+小規模な用途であれば配列が利用される場合が多く，大規模な用途であれば構造体が利用される場合が多いと考えられる．
+
+\section{ハノイの塔}
+\subsection{概略}
+ハノイの塔をスタックを用いて解く．
+
+\subsection{仕様}
+\noindent State：状態を表す構造体
+
+\noindent Stack：スタックの構造体
+
+\noindent initStack：スタックの初期化
+
+\noindent isEmpty：スタックが空か確認
+
+\noindent push：スタックに状態をプッシュ
+
+\noindent pop：スタックから状態をポップ
+
+\noindent moveDisk：ディスク移動の出力
+
+\noindent hanoi：ハノイの塔をスタックで解く
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+  typedef struct
+{
+    int from; // 移動元
+    int to;   // 移動先
+    int aux;  // 補助柱
+    int n;    // 移動するディスクの数
+} State;
+
+// スタックの構造体
+typedef struct
+{
+    State stack[100];
+    int top;
+} Stack;
+
+// スタックの初期化
+void initStack(Stack *s)
+{
+    s->top = -1;
+}
+
+// スタックが空か確認
+int isEmpty(Stack *s)
+{
+    return s->top == -1;
+}
+
+// スタックに状態をプッシュ
+void push(Stack *s, State state)
+{
+    if (s->top < 100 - 1)
+    {
+        s->stack[++(s->top)] = state;
+    }
+    else
+    {
+        printf("Stack overflow\n");
+        exit(1);
+    }
+}
+
+// スタックから状態をポップ
+State pop(Stack *s)
+{
+    if (!isEmpty(s))
+    {
+        return s->stack[(s->top)--];
+    }
+    else
+    {
+        printf("Stack underflow\n");
+        exit(1);
+    }
+}
+
+  // ディスク移動の出力
+  void moveDisk(int from, int to)
+  {
+      printf("Move disk from %c to %c\n", 'A' + from, 'A' + to);
+  }
+  
+  // ハノイの塔をスタックで解く
+  void hanoi(int numDisks)
+  {
+      Stack stack;
+      initStack(&stack);
+  
+      // 初期状態をプッシュ
+      State initialState = {0, 2, 1, numDisks};
+      push(&stack, initialState);
+  
+      while (!isEmpty(&stack))
+      {
+          // スタックから現在の状態を取得
+          State current = pop(&stack);
+  
+          if (current.n == 1)
+          {
+              // ディスクが1枚の場合は移動
+              moveDisk(current.from, current.to);
+          }
+          else
+          {
+              // 再帰を模倣するために状態をスタックにプッシュ
+              // ステップ3: 補助柱から移動先への移動を後で処理
+              push(&stack, (State){current.aux, current.to, current.from, current.n - 1});
+              // ステップ2: 移動元から移動先への移動
+              push(&stack, (State){current.from, current.to, current.aux, 1});
+              // ステップ1: 移動元から補助柱への移動を先に処理
+              push(&stack, (State){current.from, current.aux, current.to, current.n - 1});
+          }
+      }
+  }
+  
+  void main()
+  {
+      int numDisks = 4;
+      hanoi(numDisks);
+  }
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，ハノイの塔をスタックを用いて解くプログラムである．
+このプログラムは通常の再帰的な開放とは異なり，スタックを使用して反復的に解を求めている．
+まず，State構造体で移動元，移動先，補助柱，そして移動するディスクの数を表す．
+また，Stack構造体でスタックを表現している．
+
+スタックの基本操作として，initStackでスタックの初期化，isEmptyでスタックが空か確認，pushでスタックに状態をプッシュ，popでスタックから状態をポップする．
+
+hanoi関数はディスクの枚数を引数として受け取り，移動手順を計算する．最初に初期状態をスタックにプッシュする．
+その後，スタックが空になるまで以下の処理を繰り返し行う．
+
+\begin{enumerate}
+    \item ディスクが1枚の場合は移動
+    \item ディスクが複数枚の時は，以下の3状態をスタックにプッシュ
+    \begin{enumerate}
+        \item n-1枚を移動元から補助柱へ移動
+        \item 1枚を移動元から移動先へ移動
+        \item n-1枚を補助柱から移動先へ移動
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{まとめ}
+ハノイの塔は，再帰的なアルゴリズムで解くことが一般的であるが，スタックを用いて反復的に解くことも可能である．
+では，再帰的なアルゴリズムとスタックを用いた反復的なアルゴリズムの違いをメリットデメリットを踏まえて考えてみる．
+
+再帰的な解法のメリットは，アルゴリズムが直感的で理解しやすいこと，実装がシンプルであることがあげられる．
+一方で，デメリットは，深い再帰呼び出しの場合はスタックオーバーフローが発生する可能性があること，スタックのオーバーヘッドが発生することがあげられる．
+
+スタックを用いた反復的開放のメリットは，メモリの使用量をより細かく制御できること，スタックオーバーフローを防ぎやすいことがあげられる．
+一方で，デメリットは，コードが複雑になりがちなこと，ロジックの理解が難しいことがあげられる．
+
+以上のことを踏まえて実装する必要があり，小規模な問題では再帰的な開放が適しているが，大規模な問題やメモリ制約が厳しい環境では，スタックを使用した反復的解法が適していると考えられる．
+
+\section{逆ポーランド記法}
+\subsection{概略}
+スタックを用いて逆ポーランド記法を実装する．
+
+\subsection{仕様}
+\noindent Stack：スタックの構造体
+
+\noindent initStack：スタックの初期化
+
+\noindent isEmpty：スタックが空か確認
+
+\noindent isFull：スタックが満杯か確認
+
+\noindent push：スタックにプッシュ
+
+\noindent pop：スタックからポップ
+
+\noindent stringToDouble：文字列を数値に変換
+
+\noindent evaluateRPN：逆ポーランド記法を評価
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+    #include <stdio.h>
+
+    #define MAX_STACK_SIZE 100
+    
+    // スタック構造体
+    typedef struct
+    {
+        double data[MAX_STACK_SIZE];
+        int top;
+    } Stack;
+    
+    // スタックの初期化
+    void initStack(Stack *s)
+    {
+        s->top = -1;
+    }
+    
+    // スタックが空か確認
+    int isEmpty(Stack *s)
+    {
+        return s->top == -1;
+    }
+    
+    // スタックが満杯か確認
+    int isFull(Stack *s)
+    {
+        return s->top == MAX_STACK_SIZE - 1;
+    }
+    
+    // スタックにプッシュ
+    void push(Stack *s, double value)
+    {
+        if (isFull(s))
+        {
+            printf("Stack overflow!\n");
+            return;
+        }
+        s->data[++(s->top)] = value;
+    }
+    
+    // スタックからポップ
+    double pop(Stack *s)
+    {
+        if (isEmpty(s))
+        {
+            printf("Stack underflow!\n");
+            return 0;
+        }
+        return s->data[(s->top)--];
+    }
+    
+    // 文字列を数値に変換（簡易版）
+    double stringToDouble(const char *str)
+    {
+        double result = 0.0;
+        double fraction = 0.1;
+        int isNegative = 0;
+        int decimalPoint = 0;
+    
+        if (*str == '-')
+        { // 符号の処理
+            isNegative = 1;
+            str++;
+        }
+    
+        while (*str)
+        {
+            if (*str == '.')
+            {
+                decimalPoint = 1;
+                str++;
+                continue;
+            }
+    
+            if (!decimalPoint)
+            {
+                result = result * 10 + (*str - '0');
+            }
+            else
+            {
+                result += (*str - '0') * fraction;
+                fraction *= 0.1;
+            }
+            str++;
+        }
+    
+        return isNegative ? -result : result;
+    }
+    
+    // 逆ポーランド記法を評価
+    double evaluateRPN(const char *expression)
+    {
+        Stack stack;
+        initStack(&stack);
+    
+        char token[20];
+        int tokenIndex = 0;
+    
+        for (int i = 0; expression[i] != '\0'; i++)
+        {
+            char c = expression[i];
+            if (c == ' ' || expression[i + 1] == '\0')
+            {
+                if (expression[i + 1] == '\0' && c != ' ')
+                {
+                    token[tokenIndex++] = c; // 最後の文字を追加
+                }
+                token[tokenIndex] = '\0';
+    
+                if (tokenIndex > 0)
+                {
+                    // 数値かどうかの判定
+                    if ((token[0] >= '0' && token[0] <= '9') || token[0] == '-')
+                    {
+                        push(&stack, stringToDouble(token));
+                    }
+                    else
+                    {
+                        // 演算子の場合
+                        double b = pop(&stack);
+                        double a = pop(&stack);
+    
+                        switch (token[0])
+                        {
+                        case '+':
+                            push(&stack, a + b);
+                            break;
+                        case '-':
+                            push(&stack, a - b);
+                            break;
+                        case '*':
+                            push(&stack, a * b);
+                            break;
+                        case '/':
+                            if (b == 0)
+                            {
+                                printf("Error: Division by zero\n");
+                                return 0;
+                            }
+                            push(&stack, a / b);
+                            break;
+                        default:
+                            printf("Error: Unknown operator %s\n", token);
+                            return 0;
+                        }
+                    }
+                }
+                tokenIndex = 0; // トークンをリセット
+            }
+            else
+            {
+                token[tokenIndex++] = c;
+            }
+        }
+    
+        return pop(&stack);
+    }
+    
+    int main()
+    {
+        char expression[100] = "3 4 + 2 * 7 /";
+    
+        double result = evaluateRPN(expression);
+        printf("Result: %f\n", result);
+    
+        return 0;
+    }
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，逆ポーランド記法をスタックを用いて評価するプログラムである．
+逆ポーランド記法は，演算子を後ろに置く記法である．
+
+まず，Stack構造体でスタックを表現している．
+dateはスタックのデータを格納する配列，topはスタックのトップを表す．
+基本操作は，initStackでスタックの初期化，isEmptyでスタックが空か確認，isFullでスタックが満杯か確認，pushでスタックにプッシュ，popでスタックからポップする．
+
+stringToDouble関数は，文字列を数値に変換する関数である．
+変換の流れを説明する．
+まず，負数の場合は文字列の先頭が'-'の場合，isNegativeに1を代入して，ポインタを次の文字に進める．
+次に，小数点よりも前の場合は，resultに10を掛けて，文字列から'0'を引いた値を加算する．
+小数点よりも後の場合は，resultに文字列から'0'を引いた値をfractionで割った値を加算していき，fractionを0.1ずつ小さくしていく．
+
+evaluateRPN関数は，逆ポーランド記法を評価する関数である．
+関数の流れを説明する．
+まず，文字列をトークン化する．空白文字を区切りとして，最大20文字まで格納可能とする．
+トークンが得られると，以下のルールで処理する．
+\begin{enumerate}
+    \item トークンが数値の場合
+    \begin{enumerate}
+        \item 数値に変換する
+        \item スタックにプッシュ
+    \end{enumerate}
+    \item トークンが演算子の場合
+    \begin{enumerate}
+        \item スタックから2つの数値をポップ
+        \item 演算を実行する
+        \item 結果をスタックにプッシュ
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{まとめ}
+逆ポーランド記法は，演算子を後ろに置く記法であり，スタックを用いて効率的に評価することができる．
+今回作成したプログラムは，四則演算のみであるが，evaluateRPN関数の分岐を増やせばよいのでほかの演算子を含めることもできる．
+そのように考えていくと，四則演算以外にも累乗だったり，階乗だったりなどを含めると逆ポーランド記法を利用して計算機を作成することができると考えられる．
+
+数学の参考書などでよく見かける記法を中値記法とよぶのだが，コンピュータでは逆ポーランド記法が使われることが多い．
+その理由として，逆ポーランド記法は，括弧が不要であるため，計算機が簡単に計算できることがあげられる．
+また，逆ポーランド記法は，スタックを用いて効率的に評価することができるため，計算機の実装に適している．
+
+
+\part{List and Binary search tree}
+
+\section{Singly linked list}
+\subsection{概略}
+Insert, Delete, Searchの機能を供えた単方向リスト．
+
+\subsection{仕様}
+\noindent printList：リストを出力する
+
+\noindent prepend：リストの先頭に追加する
+
+\noindent deleteNode：リストからノードを削除する
+
+\noindent search：リストからノードを検索する
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+    #include <stdio.h>
+    #include <stdlib.h>
+    
+    typedef struct node
+    {
+        int data;
+        struct node *next;
+    } Node;
+    
+    // Nodeを出力する
+    void printList(Node *head)
+    {
+        while (head != NULL)
+        {
+            printf("%d \n", head->data);
+            head = head->next;
+        }
+    }
+    
+    // Nodeを先頭に追加する
+    void prepend(Node **head, int data)
+    {
+        Node *newNode = (Node *)malloc(sizeof(Node));
+        newNode->data = data;
+        newNode->next = *head;
+        if (*head != NULL)
+        {
+            newNode->next = *head;
+        }
+        *head = newNode;
+    }
+    
+    // Nodeを削除する
+    void deleteNode(Node **head, int key)
+    {
+        Node *temp = *head, *prev;
+    
+        if (temp != NULL && temp->data == key)
+        {
+            *head = temp->next;
+            free(temp);
+            return;
+        }
+    
+        while (temp != NULL && temp->data != key)
+        {
+            prev = temp;
+            temp = temp->next;
+        }
+    
+        if (temp == NULL)
+            return;
+    
+        prev->next = temp->next;
+        free(temp);
+    }
+    
+    // Nodeを検索する
+    void search(Node *head, int key)
+    {
+        Node *current = head;
+        while (current != NULL)
+        {
+            if (current->data == key)
+            {
+                printf("Found %d\n", current->data);
+                return;
+            }
+            current = current->next;
+        }
+        printf("Not Found\n");
+    }
+
+    void main()
+{
+    Node *head = NULL;
+
+    prepend(&head, 3);
+    prepend(&head, 2);
+    prepend(&head, 1);
+
+    deleteNode(&head, 2);
+
+    printList(head);
+    search(head, 1);
+}
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，単方向リストを実装したものである．
+リストの基本操作として，printListでリストを出力，prependでリストの先頭に追加，deleteNodeでリストからノードを削除，searchでリストからノードを検索する．
+単方向リストとは，各ノードが次のノードを指すポインタを持つリストである．
+prepend関数は，新しいノードを作成し，そのノードをリストの先頭のアドレスを指すようにしている．
+deleteNode関数は，指定されたキーのノードを先頭のノードから順番に検索し，そのノードを削除する．
+search関数は，指定されたキーのノードを先頭のノードから順番に検索し，そのノードを出力する．
+
+\subsection{まとめ}
+単方向リストは，各ノードが次のノードを指すポインタを持つリストである．
+単方向リストはデータ構造の一種であるのでほかのデータ構造と比較して考えてみる．
+
+単方向リストを配列と比較したメリットは，動的なサイズ変更ができること，要素の挿入・削除が効率的であること，メモリを効率的に利用できることがあげられる．
+一方でデメリットは，ランダムアクセスができないこと，ポインタ分の追加メモリが必要なこと，キャッシュ効率が悪いことが挙げられる．
+
+以上のことを踏まえて実装する必要があり，リストの要素数が多い場合や要素の挿入・削除が頻繁に行われる場合は，単方向リストが適していると考えられる．
+
+\section{Stack and Queue using singly linked list}
+\subsection{概略}
+単方向リストを用いてスタックとキューを実装する．
+
+\subsection{仕様}
+\noindent 入力：
+
+\noindent 出力：
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+// ここにコードを記述
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+
+\subsection{まとめ}
+
+\section{Doubly linked list}
+\subsection{概略}
+Insert, Delete, Searchの機能を供えた双方向リスト．
+
+\subsection{仕様}
+\noindent 入力：
+
+\noindent 出力：
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+// ここにコードを記述
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+
+\subsection{まとめ}
+
+\section{Binary search tree}
+\subsection{概略}
+Insert, Delete, Searchの機能を供えた二分探索木．
+
+\subsection{仕様}
+\noindent 入力：
+
+\noindent 出力：
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+// ここにコードを記述
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+
+\subsection{まとめ}
+
+// 参考文献，リンク付き
+\begin{thebibliography}{9}
+%   \bibitem{online1} BohYoh.com, ``BohYoh.com【著書】Ｃ言語によるアルゴリズムとデータ構造《演習問題5-6の解答》'', \url{https://www.bohyoh.com/Books/CalgoA/EX/ALGOEX0506.html}, (参照 2024-12-18).
+%   \bibitem{book2} 基本情報技術者試験 受験ナビ，``逆ポーランド記法 _ やさしい基礎理論 _ 基本情報技術者試験 受験ナビ｜科目A・科目B対策から過去問解説まで 250本以上の記事を掲載''，\url{https://www.seplus.jp/dokushuzemi/ec/fe/fenavi/kind_basic_theory/reverse-polish-notation/}，(参照 2024-12-18).
+%   \bibitem{book3} 本の名前，著者，出版社，出版年
+\end{thebibliography}
+\end{document}
