@@ -1,0 +1,76 @@
+\documentclass{ltjsarticle}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{url}
+\geometry{left=25mm,right=25mm,top=25mm,bottom=25mm}
+
+\begin{document}
+\title{論理回路}
+\author{平野 健汰}
+\date{\today}
+
+\maketitle
+
+\section{目的}
+論理回路の基本的な動作を理解し、組み合わせ回路の設計方法を習得する。
+
+\section{理論}
+% 理論部分は実際の実験内容に応じて記述
+
+\section{使用器具}
+\begin{itemize}
+  \item ブレッドボード
+  \item LED
+  \item 抵抗
+  \item 論理ICチップ
+  \item ジャンパーワイヤー
+\end{itemize}
+
+\section{実験}
+\subsection{実験方法}
+\subsubsection{リングオシレータ}
+\begin{itemize}
+  \item ブレッドボード上にインバータ回路をロジックIC(インバータ)を用いて実装する．
+  \item 2種類のコンデンサ(470 nF, 4.7 $\mu$F)を用いてファンクションジェネレータより方形波(f = 100 Hz, Vpp = 5 V, offset = 2.5 V)を入力する．
+  \item 出力波形をオシロスコープで観測する．
+\end{itemize}
+
+\begin{itemize}
+  \item ブレッドボード上に三段の縦続接続インバータによるリングオシレータ回路を実装する．
+  \item V1, V2 を観測して1素子の伝搬遅延時間，発振周波数を求める．
+  \item 各段のコンデンサを変更して同様に測定する．
+\end{itemize}
+
+\subsubsection{Dフリップフロップを用いた2ビット4進非同期カウンタ回路}
+\begin{itemize}
+  \item ブレッドボード上に2ビットカウンタ回路をロジックIC(エッジトリガ型Dフリップフロップ)を用いて実装．
+  \item ファンクションジェネレータ(f = 1 kHz, Vpp = 5 V, offset = 2.5 V の方形波)をクロック信号CLKとして用いて駆動させる．
+  \item Q1, Q2 およびクロック CLK を観測して記録した．
+\end{itemize}
+
+\subsubsection{2ビットデコーダ回路によるLEDルーレット}
+\begin{itemize}
+  \item ブレッドボード上に2ビットデコーダ回路と LED 回路をロジックIC(2入力論理和)を用いて実装する．
+  \item 2bit4 進カウンタ回路と接続し，FG(f = 10 Hz, Vpp = 5 V, offset = 2.5 V の方形波)をクロック信号CLKとして用いて駆動させる．
+  \item LED の点灯状態を観測して記録する．
+\end{itemize}
+
+\begin{itemize}
+  \item リングオシレータと2ビット4 進非同期カウンタ回路を接続する．
+  \item 間にはタクトスイッチを挟む
+  \item たくとスイッチが推されている間，LED がルーレットのように点滅し，スイッチをオフにすると4つのLEDのうち1つのLEDのみが点灯することを確認し，記録する．
+\end{itemize}
+\subsection{結果}
+% 実験結果を記述
+
+\section{考察}
+% 実験結果の考察を記述
+
+\begin{thebibliography}{9}
+\bibitem{reference1} \url{https://example.com/reference1}
+\end{thebibliography}
+
+\end{document}

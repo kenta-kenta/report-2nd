@@ -33,74 +33,75 @@ PushとPopの操作を行うデータ構造．LIFO(Last In First Out)の原則�
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-  // 空のスタックを作成
-  int stackEmpty(int top)
-  {
-      if (top == 0)
-      {
-          return 1;
-      }
-      else
-      {
-          return 0;
-      }
-  }
-  
-  // スタックが満杯かどうかを判定
-  int stackFull(int top)
-  {
-      if (top == 9)
-      {
-          return 1;
-      }
-      else
-      {
-          return 0;
-      }
-  }
-  
-  // スタックに要素を追加
-  void push(int arr[], int x, int *top)
-  {
-      if (stackFull(*top) == 1)
-      {
-          printf("error: stack overflow\n");
-      }
-      else
-      {
-          *top = *top + 1;
-          arr[*top] = x;
-      }
-  }
-  
-  // スタックから要素を取り出す
-  int pop(int arr[], int *top)
-  {
-      if (stackEmpty(*top) == 1)
-      {
-          printf("error: stack underflow\n");
-          return -1;
-      }
-      else
-      {
-          *top = *top - 1;
-          return arr[*top + 1];
-      }
-  }
-  
-  void main()
-  {
-      int arr[10];
-      int top = 0;
-      for (int i = 1; i < 11; i++)
-      {
-          push(arr, i, &top);
-      }
-      for (int i = 1; i < 11; i++)
-      {
-          printf("%d\n", pop(arr, &top));
-      }
-  }
+#include <stdio.h>
+// 空のスタックを作成
+int stackEmpty(int top)
+{
+    if (top == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+// スタックが満杯かどうかを判定
+int stackFull(int top)
+{
+    if (top == 9)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+// スタックに要素を追加
+void push(int arr[], int x, int *top)
+{
+    if (stackFull(*top) == 1)
+    {
+        printf("error: stack overflow\n");
+    }
+    else
+    {
+        *top = *top + 1;
+        arr[*top] = x;
+    }
+}
+
+// スタックから要素を取り出す
+int pop(int arr[], int *top)
+{
+    if (stackEmpty(*top) == 1)
+    {
+        printf("error: stack underflow\n");
+        return -1;
+    }
+    else
+    {
+        *top = *top - 1;
+        return arr[*top + 1];
+    }
+}
+
+void main()
+{
+    int arr[10];
+    int top = 0;
+    for (int i = 1; i < 11; i++)
+    {
+        push(arr, i, &top);
+    }
+    for (int i = 1; i < 11; i++)
+    {
+        printf("%d\n", pop(arr, &top));
+    }
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
@@ -138,50 +139,51 @@ EnqueueとDequeueの操作を行うデータ構造．FIFO(First In First Out)の
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-  // キューに要素を追加
-  void enqueue(int arr[], int x, int *tail)
-  {
-      if (*tail == 10)
-      {
-          printf("error: stack overflow\n");
-      }
-      else
-      {
-          arr[*tail] = x;
-          *tail = *tail + 1;
-      }
-  }
-  
-  // キューから要素を取り出す
-  int dequeue(int arr[], int *head)
-  {
-      int x = arr[*head];
-      if (*head == 10)
-      {
-          printf("error: stack underflow\n");
-          return -1;
-      }
-      else
-      {
-          *head = *head + 1;
-      }
-      return x;
-  }
-  
-  void main()
-  {
-      int arr[10];
-      int tail = 0;
-      int head = 0;
-      for (int i = 1; i < 12; i++)
-      {
-          enqueue(arr, i, &tail);
-      }
-      for (int i = 1; i < 12; i++)
-      {
-          printf("%d\n", dequeue(arr, &head));
-      }
-  }
+#include <stdio.h>
+// キューに要素を追加
+void enqueue(int arr[], int x, int *tail)
+{
+    if (*tail == 10)
+    {
+        printf("error: stack overflow\n");
+    }
+    else
+    {
+        arr[*tail] = x;
+        *tail = *tail + 1;
+    }
+}
+
+// キューから要素を取り出す
+int dequeue(int arr[], int *head)
+{
+    int x = arr[*head];
+    if (*head == 10)
+    {
+        printf("error: stack underflow\n");
+        return -1;
+    }
+    else
+    {
+        *head = *head + 1;
+    }
+    return x;
+}
+
+void main()
+{
+    int arr[10];
+    int tail = 0;
+    int head = 0;
+    for (int i = 1; i < 12; i++)
+    {
+        enqueue(arr, i, &tail);
+    }
+    for (int i = 1; i < 12; i++)
+    {
+        printf("%d\n", dequeue(arr, &head));
+    }
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
@@ -231,7 +233,8 @@ EnqueueとDequeueの操作を行うデータ構造．FIFO(First In First Out)の
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-  typedef struct
+#include <stdio.h>
+typedef struct
 {
     int from; // 移動元
     int to;   // 移動先
@@ -286,50 +289,53 @@ State pop(Stack *s)
     }
 }
 
-  // ディスク移動の出力
-  void moveDisk(int from, int to)
-  {
-      printf("Move disk from %c to %c\n", 'A' + from, 'A' + to);
-  }
-  
-  // ハノイの塔をスタックで解く
-  void hanoi(int numDisks)
-  {
-      Stack stack;
-      initStack(&stack);
-  
-      // 初期状態をプッシュ
-      State initialState = {0, 2, 1, numDisks};
-      push(&stack, initialState);
-  
-      while (!isEmpty(&stack))
-      {
-          // スタックから現在の状態を取得
-          State current = pop(&stack);
-  
-          if (current.n == 1)
-          {
-              // ディスクが1枚の場合は移動
-              moveDisk(current.from, current.to);
-          }
-          else
-          {
-              // 再帰を模倣するために状態をスタックにプッシュ
-              // ステップ3: 補助柱から移動先への移動を後で処理
-              push(&stack, (State){current.aux, current.to, current.from, current.n - 1});
-              // ステップ2: 移動元から移動先への移動
-              push(&stack, (State){current.from, current.to, current.aux, 1});
-              // ステップ1: 移動元から補助柱への移動を先に処理
-              push(&stack, (State){current.from, current.aux, current.to, current.n - 1});
-          }
-      }
-  }
-  
-  void main()
-  {
-      int numDisks = 4;
-      hanoi(numDisks);
-  }
+// ディスク移動の出力
+void moveDisk(int from, int to)
+{
+    printf("Move disk from %c to %c\n", 'A' + from, 'A' + to);
+}
+
+// ハノイの塔をスタックで解く
+void hanoi(int numDisks)
+{
+    Stack stack;
+    initStack(&stack);
+
+    // 初期状態をプッシュ
+    State initialState = {0, 2, 1, numDisks};
+    push(&stack, initialState);
+
+    while (!isEmpty(&stack))
+    {
+        // スタックから現在の状態を取得
+        State current = pop(&stack);
+
+        if (current.n == 1)
+        {
+        // ディスクが1枚の場合は移動
+        moveDisk(current.from, current.to);
+        }
+        else
+        {
+        // 再帰を模倣するために状態をスタックにプッシュ
+        // ステップ3: 補助柱から移動先への移動を後で処理
+        push(&stack, 
+        (State){current.aux, current.to, current.from, current.n - 1});
+        // ステップ2: 移動元から移動先への移動
+        push(&stack, 
+        (State){current.from, current.to, current.aux, 1});
+        // ステップ1: 移動元から補助柱への移動を先に処理
+        push(&stack, 
+        (State){current.from, current.aux, current.to, current.n - 1});
+        }
+    }
+}
+
+void main()
+{
+    int numDisks = 4;
+    hanoi(numDisks);
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
@@ -360,7 +366,7 @@ hanoi関数はディスクの枚数を引数として受け取り，移動手順
 再帰的な解法のメリットは，アルゴリズムが直感的で理解しやすいこと，実装がシンプルであることがあげられる．
 一方で，デメリットは，深い再帰呼び出しの場合はスタックオーバーフローが発生する可能性があること，スタックのオーバーヘッドが発生することがあげられる．
 
-スタックを用いた反復的開放のメリットは，メモリの使用量をより細かく制御できること，スタックオーバーフローを防ぎやすいことがあげられる．
+スタックを用いた反復的な解法のメリットは，メモリの使用量をより細かく制御できること，スタックオーバーフローを防ぎやすいことがあげられる．
 一方で，デメリットは，コードが複雑になりがちなこと，ロジックの理解が難しいことがあげられる．
 
 以上のことを踏まえて実装する必要があり，小規模な問題では再帰的な開放が適しているが，大規模な問題やメモリ制約が厳しい環境では，スタックを使用した反復的解法が適していると考えられる．
@@ -388,173 +394,173 @@ hanoi関数はディスクの枚数を引数として受け取り，移動手順
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-    #include <stdio.h>
+#include <stdio.h>
 
-    #define MAX_STACK_SIZE 100
-    
-    // スタック構造体
-    typedef struct
+#define MAX_STACK_SIZE 100
+
+// スタック構造体
+typedef struct
+{
+    double data[MAX_STACK_SIZE];
+    int top;
+} Stack;
+
+// スタックの初期化
+void initStack(Stack *s)
+{
+    s->top = -1;
+}
+
+// スタックが空か確認
+int isEmpty(Stack *s)
+{
+    return s->top == -1;
+}
+
+// スタックが満杯か確認
+int isFull(Stack *s)
+{
+    return s->top == MAX_STACK_SIZE - 1;
+}
+
+// スタックにプッシュ
+void push(Stack *s, double value)
+{
+    if (isFull(s))
     {
-        double data[MAX_STACK_SIZE];
-        int top;
-    } Stack;
-    
-    // スタックの初期化
-    void initStack(Stack *s)
-    {
-        s->top = -1;
+        printf("Stack overflow!\n");
+        return;
     }
-    
-    // スタックが空か確認
-    int isEmpty(Stack *s)
+    s->data[++(s->top)] = value;
+}
+
+// スタックからポップ
+double pop(Stack *s)
+{
+    if (isEmpty(s))
     {
-        return s->top == -1;
-    }
-    
-    // スタックが満杯か確認
-    int isFull(Stack *s)
-    {
-        return s->top == MAX_STACK_SIZE - 1;
-    }
-    
-    // スタックにプッシュ
-    void push(Stack *s, double value)
-    {
-        if (isFull(s))
-        {
-            printf("Stack overflow!\n");
-            return;
-        }
-        s->data[++(s->top)] = value;
-    }
-    
-    // スタックからポップ
-    double pop(Stack *s)
-    {
-        if (isEmpty(s))
-        {
-            printf("Stack underflow!\n");
-            return 0;
-        }
-        return s->data[(s->top)--];
-    }
-    
-    // 文字列を数値に変換（簡易版）
-    double stringToDouble(const char *str)
-    {
-        double result = 0.0;
-        double fraction = 0.1;
-        int isNegative = 0;
-        int decimalPoint = 0;
-    
-        if (*str == '-')
-        { // 符号の処理
-            isNegative = 1;
-            str++;
-        }
-    
-        while (*str)
-        {
-            if (*str == '.')
-            {
-                decimalPoint = 1;
-                str++;
-                continue;
-            }
-    
-            if (!decimalPoint)
-            {
-                result = result * 10 + (*str - '0');
-            }
-            else
-            {
-                result += (*str - '0') * fraction;
-                fraction *= 0.1;
-            }
-            str++;
-        }
-    
-        return isNegative ? -result : result;
-    }
-    
-    // 逆ポーランド記法を評価
-    double evaluateRPN(const char *expression)
-    {
-        Stack stack;
-        initStack(&stack);
-    
-        char token[20];
-        int tokenIndex = 0;
-    
-        for (int i = 0; expression[i] != '\0'; i++)
-        {
-            char c = expression[i];
-            if (c == ' ' || expression[i + 1] == '\0')
-            {
-                if (expression[i + 1] == '\0' && c != ' ')
-                {
-                    token[tokenIndex++] = c; // 最後の文字を追加
-                }
-                token[tokenIndex] = '\0';
-    
-                if (tokenIndex > 0)
-                {
-                    // 数値かどうかの判定
-                    if ((token[0] >= '0' && token[0] <= '9') || token[0] == '-')
-                    {
-                        push(&stack, stringToDouble(token));
-                    }
-                    else
-                    {
-                        // 演算子の場合
-                        double b = pop(&stack);
-                        double a = pop(&stack);
-    
-                        switch (token[0])
-                        {
-                        case '+':
-                            push(&stack, a + b);
-                            break;
-                        case '-':
-                            push(&stack, a - b);
-                            break;
-                        case '*':
-                            push(&stack, a * b);
-                            break;
-                        case '/':
-                            if (b == 0)
-                            {
-                                printf("Error: Division by zero\n");
-                                return 0;
-                            }
-                            push(&stack, a / b);
-                            break;
-                        default:
-                            printf("Error: Unknown operator %s\n", token);
-                            return 0;
-                        }
-                    }
-                }
-                tokenIndex = 0; // トークンをリセット
-            }
-            else
-            {
-                token[tokenIndex++] = c;
-            }
-        }
-    
-        return pop(&stack);
-    }
-    
-    int main()
-    {
-        char expression[100] = "3 4 + 2 * 7 /";
-    
-        double result = evaluateRPN(expression);
-        printf("Result: %f\n", result);
-    
+        printf("Stack underflow!\n");
         return 0;
     }
+    return s->data[(s->top)--];
+}
+
+// 文字列を数値に変換（簡易版）
+double stringToDouble(const char *str)
+{
+    double result = 0.0;
+    double fraction = 0.1;
+    int isNegative = 0;
+    int decimalPoint = 0;
+
+    if (*str == '-')
+    { // 符号の処理
+        isNegative = 1;
+        str++;
+    }
+
+    while (*str)
+    {
+        if (*str == '.')
+        {
+            decimalPoint = 1;
+            str++;
+            continue;
+        }
+
+        if (!decimalPoint)
+        {
+            result = result * 10 + (*str - '0');
+        }
+        else
+        {
+            result += (*str - '0') * fraction;
+            fraction *= 0.1;
+        }
+        str++;
+    }
+
+    return isNegative ? -result : result;
+}
+
+// 逆ポーランド記法を評価
+double evaluateRPN(const char *expression)
+{
+    Stack stack;
+    initStack(&stack);
+
+    char token[20];
+    int tokenIndex = 0;
+
+    for (int i = 0; expression[i] != '\0'; i++)
+    {
+        char c = expression[i];
+        if (c == ' ' || expression[i + 1] == '\0')
+        {
+            if (expression[i + 1] == '\0' && c != ' ')
+            {
+                token[tokenIndex++] = c; // 最後の文字を追加
+            }
+            token[tokenIndex] = '\0';
+
+            if (tokenIndex > 0)
+            {
+                // 数値かどうかの判定
+                if ((token[0] >= '0' && token[0] <= '9') || token[0] == '-')
+                {
+                    push(&stack, stringToDouble(token));
+                }
+                else
+                {
+                    // 演算子の場合
+                    double b = pop(&stack);
+                    double a = pop(&stack);
+
+                    switch (token[0])
+                    {
+                    case '+':
+                        push(&stack, a + b);
+                        break;
+                    case '-':
+                        push(&stack, a - b);
+                        break;
+                    case '*':
+                        push(&stack, a * b);
+                        break;
+                    case '/':
+                        if (b == 0)
+                        {
+                            printf("Error: Division by zero\n");
+                            return 0;
+                        }
+                        push(&stack, a / b);
+                        break;
+                    default:
+                        printf("Error: Unknown operator %s\n", token);
+                        return 0;
+                    }
+                }
+            }
+            tokenIndex = 0; // トークンをリセット
+        }
+        else
+        {
+            token[tokenIndex++] = c;
+        }
+    }
+
+    return pop(&stack);
+}
+
+int main()
+{
+    char expression[100] = "3 4 + 2 * 7 /";
+
+    double result = evaluateRPN(expression);
+    printf("Result: %f\n", result);
+
+    return 0;
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
@@ -616,80 +622,80 @@ Insert, Delete, Searchの機能を供えた単方向リスト．
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-    #include <stdio.h>
-    #include <stdlib.h>
-    
-    typedef struct node
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int data;
+    struct node *next;
+} Node;
+
+// Nodeを出力する
+void printList(Node *head)
+{
+    while (head != NULL)
     {
-        int data;
-        struct node *next;
-    } Node;
-    
-    // Nodeを出力する
-    void printList(Node *head)
-    {
-        while (head != NULL)
-        {
-            printf("%d \n", head->data);
-            head = head->next;
-        }
+        printf("%d \n", head->data);
+        head = head->next;
     }
-    
-    // Nodeを先頭に追加する
-    void prepend(Node **head, int data)
+}
+
+// Nodeを先頭に追加する
+void prepend(Node **head, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = *head;
+    if (*head != NULL)
     {
-        Node *newNode = (Node *)malloc(sizeof(Node));
-        newNode->data = data;
         newNode->next = *head;
-        if (*head != NULL)
-        {
-            newNode->next = *head;
-        }
-        *head = newNode;
     }
-    
-    // Nodeを削除する
-    void deleteNode(Node **head, int key)
+    *head = newNode;
+}
+
+// Nodeを削除する
+void deleteNode(Node **head, int key)
+{
+    Node *temp = *head, *prev;
+
+    if (temp != NULL && temp->data == key)
     {
-        Node *temp = *head, *prev;
-    
-        if (temp != NULL && temp->data == key)
-        {
-            *head = temp->next;
-            free(temp);
-            return;
-        }
-    
-        while (temp != NULL && temp->data != key)
-        {
-            prev = temp;
-            temp = temp->next;
-        }
-    
-        if (temp == NULL)
-            return;
-    
-        prev->next = temp->next;
+        *head = temp->next;
         free(temp);
-    }
-    
-    // Nodeを検索する
-    void search(Node *head, int key)
-    {
-        Node *current = head;
-        while (current != NULL)
-        {
-            if (current->data == key)
-            {
-                printf("Found %d\n", current->data);
-                return;
-            }
-            current = current->next;
-        }
-        printf("Not Found\n");
+        return;
     }
 
-    void main()
+    while (temp != NULL && temp->data != key)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    if (temp == NULL)
+        return;
+
+    prev->next = temp->next;
+    free(temp);
+}
+
+// Nodeを検索する
+void search(Node *head, int key)
+{
+    Node *current = head;
+    while (current != NULL)
+    {
+        if (current->data == key)
+        {
+            printf("Found %d\n", current->data);
+            return;
+        }
+        current = current->next;
+    }
+    printf("Not Found\n");
+}
+
+void main()
 {
     Node *head = NULL;
 
@@ -726,59 +732,508 @@ search関数は，指定されたキーのノードを先頭のノードから�
 単方向リストを用いてスタックとキューを実装する．
 
 \subsection{仕様}
-\noindent 入力：
+\noindent stackEmpty：スタックが空か確認
 
-\noindent 出力：
+\noindent push：スタックにデータを追加
+
+\noindent pop：スタックからデータを取り出す
+
+\noindent queueEmpty：キューが空か確認
+
+\noindent enqueue：キューにデータを追加
+
+\noindent dequeue：キューからデータを取り出す
 
 \subsection{コード}
+\subsubsection{Stack}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-// ここにコードを記述
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int data;
+    struct node *next;
+} Node;
+
+int stackEmpty(Node *head)
+{
+    return head == NULL;
+}
+
+void push(Node **head, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+int pop(Node **head)
+{
+    if (stackEmpty(*head))
+    {
+        printf("error: stack underflow\n");
+        return -1;
+    }
+    else
+    {
+        int data = (*head)->data;
+        Node *temp = *head;
+        *head = (*head)->next;
+        free(temp);
+        return data;
+    }
+}
+
+void main()
+{
+    Node *head = NULL;
+
+    push(&head, 1);
+    push(&head, 2);
+    push(&head, 3);
+
+    printf("%d\n", pop(&head));
+    printf("%d\n", pop(&head));
+    printf("%d\n", pop(&head));
+    printf("%d\n", pop(&head));
+}
+\end{lstlisting}
+
+\subsubsection{Queue}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int data;
+    struct node *next;
+} Node;
+    int queueEmpty(Node *head)
+{
+    return head == NULL;
+}
+
+void enqueue(Node **head, Node **tail, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (*tail != NULL)
+    {
+        (*tail)->next = newNode;
+    }
+
+    *tail = newNode;
+
+    if (*head == NULL)
+    {
+        *head = *tail;
+    }
+}
+
+int dequeue(Node **head, Node **tail)
+{
+    if (queueEmpty(*head))
+    {
+        printf("error: queue underflow\n");
+        return -1;
+    }
+    else
+    {
+        int data = (*head)->data;
+        Node *temp = *head;
+        *head = (*head)->next;
+        free(temp);
+
+        if (*head == NULL)
+        {
+            *tail = NULL;
+        }
+
+        return data;
+    }
+}
+
+void main()
+{
+    Node *head = NULL;
+    Node *tail = NULL;
+
+    enqueue(&head, &tail, 1);
+    enqueue(&head, &tail, 2);
+    enqueue(&head, &tail, 3);
+
+    printf("%d\n", dequeue(&head, &tail));
+    printf("%d\n", dequeue(&head, &tail));
+    printf("%d\n", dequeue(&head, &tail));
+    printf("%d\n", dequeue(&head, &tail));
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
+このプログラムは，単方向リストを用いてスタックとキューを実装したものである．
+スタックは，後入れ先出しのデータ構造であり，pushでデータを追加し，popでデータを取り出す．
+キューは，先入れ先出しのデータ構造であり，enqueueでデータを追加し，dequeueでデータを取り出す．
+
+Node構造体は，データと次のノードを指すポインタを持つ．
+スタック，キューの実際の操作については，先述したので省略する．
 
 \subsection{まとめ}
+スタックとキューは，データの追加・取り出しの順番が異なるデータ構造である．
+
+先述したがスタック，キューは配列を利用しても作成することができる．
+単方向リストを利用する場合と配列を利用する場合で比較して考えてみる．
+単方向リストを利用するメリットは，動的なメモリの拡張ができること，容量の事前定義が不要であることがあげられる．
+一方でデメリットは，ポインタ分の追加メモリが必要なこと，キャッシュ効率が悪いことがあげられる．
+
+以上のことを踏まえて実装する必要があり，要素数が多い場合や要素の挿入・削除が頻繁に行われる場合は，単方向リストが適していると考えられる．
+
 
 \section{Doubly linked list}
 \subsection{概略}
 Insert, Delete, Searchの機能を供えた双方向リスト．
 
 \subsection{仕様}
-\noindent 入力：
+\noindent printList：リストを出力する
 
-\noindent 出力：
+\noindent prepend：リストの先頭に追加する
+
+\noindent deleteNode：リストからノードを削除する
+
+\noindent search：リストからノードを検索する
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-// ここにコードを記述
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int data;
+    struct node *next;
+    struct node *prev;
+} Node;
+
+void printList(Node *head)
+{
+    while (head != NULL)
+    {
+        printf("%d \n", head->data);
+        head = head->next;
+    }
+}
+
+void prepend(Node **head, int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = *head;
+    newNode->prev = NULL;
+    if (*head != NULL)
+    {
+        (*head)->prev = newNode;
+    }
+    *head = newNode;
+}
+
+void deleteNode(Node **head, int key)
+{
+    Node *temp = *head;
+
+    while (temp != NULL && temp->data != key)
+    {
+        temp = temp->next;
+    }
+
+    if (temp == NULL)
+    {
+        return;
+    }
+
+    if (temp->prev != NULL)
+    {
+        temp->prev->next = temp->next;
+    }
+    else
+    {
+        *head = temp->next;
+    }
+
+    if (temp->next != NULL)
+    {
+        temp->next->prev = temp->prev;
+    }
+
+    free(temp);
+}
+
+void search(Node *head, int key)
+{
+    Node *current = head;
+    while (current != NULL)
+    {
+        if (current->data == key)
+        {
+            printf("Found %d\n", current->data);
+            return;
+        }
+        current = current->next;
+    }
+}
+
+void main()
+{
+    Node *head = NULL;
+
+    prepend(&head, 1);
+    prepend(&head, 2);
+    prepend(&head, 3);
+
+    deleteNode(&head, 2);
+
+    printList(head);
+    search(head, 1);
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
+このプログラムは，双方向リストを実装したものである．
+双方向リストは，各ノードが前のノードと次のノードを指すポインタを持つリストである．
+node構造体で，データと前のノードを指すポインタ，次のノードを指すポインタを持つ．
+基本操作は，printListでリストを出力，prependでリストの先頭に追加，deleteNodeでリストからノードを削除，searchでリストからノードを検索する．
 
 \subsection{まとめ}
+双方向リストは，各ノードが前のノードと次のノードを指すポインタを持つリストである．
+双方向リストは，単方向リストと比較して，前のノードを指すポインタを持つため，逆方向の操作が容易である．
+また，双方向リストは，単方向リストと比較して，ポインタ分の追加メモリが必要である．
+
+単方向リストと双方向リストについて考えてみる．
+双方向リストを利用するメリットは，両方向の走査が可能であること，要素の削除が容易であること，すべての位置での操作が$O(1)$で行えることがあげられる．
+一方でデメリットは，ポインタ分の追加メモリが必要であること，実装が複雑であること，ポイント操作のミスが起きやすいことがあげられる．
+
+単方向リストを利用するメリットは，メモリ効率がいいこと，実装がシンプルであること，前方向の操作が高速であることがあげられる．
+一方でデメリットは，後方向の走査ができないこと，末尾操作が非効率であることがあげられる．
+
+以上のことを踏まえて実装する必要があり，操作の柔軟性を重視する場合や双方向走査が必要な場合は，双方向リストが適していると考えられる．
 
 \section{Binary search tree}
 \subsection{概略}
 Insert, Delete, Searchの機能を供えた二分探索木．
 
 \subsection{仕様}
-\noindent 入力：
+\noindent printTree：木を出力する
 
-\noindent 出力：
+\noindent insert：ノードを挿入する
+
+\noindent delete：ノードを削除する
+
+\noindent search：ノードを検索する
 
 \subsection{コード}
 \begin{lstlisting}[frame=single, lineskip=-5pt]
-// ここにコードを記述
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int key;
+    struct node *parent;
+    struct node *left;
+    struct node *right;
+} Node;
+
+void printTree(Node *tree)
+{
+    if (tree == NULL)
+    {
+        return;
+    }
+
+    printf("%d\n", tree->key);
+    printTree(tree->left);
+    printTree(tree->right);
+}
+
+void insert(Node **tree, int key)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    newNode->key = key;
+    newNode->parent = NULL;
+    newNode->left = NULL;
+    newNode->right = NULL;
+
+    Node *y = NULL;
+    Node *x = *tree;
+
+    while (x != NULL)
+    {
+        y = x;
+        if (newNode->key < x->key)
+        {
+            x = x->left;
+        }
+        else
+        {
+            x = x->right;
+        }
+    }
+
+    newNode->parent = y;
+    if (y == NULL)
+    {
+        *tree = newNode;
+    }
+    else if (newNode->key < y->key)
+    {
+        y->left = newNode;
+    }
+    else
+    {
+        y->right = newNode;
+    }
+}
+
+void delete(Node **tree, int key)
+{
+    Node *z = *tree;
+    while (z != NULL && z->key != key)
+    {
+        if (key < z->key)
+        {
+            z = z->left;
+        }
+        else
+        {
+            z = z->right;
+        }
+    }
+
+    if (z == NULL)
+    {
+        return;
+    }
+
+    Node *x;
+    Node *y;
+    if (z->left == NULL || z->right == NULL)
+    {
+        y = z;
+    }
+    else
+    {
+        y = z->right;
+        while (y->left != NULL)
+        {
+            y = y->left;
+        }
+    }
+
+    if (y->left != NULL)
+    {
+        x = y->left;
+    }
+    else
+    {
+        x = y->right;
+    }
+
+    if (x != NULL)
+    {
+        x->parent = y->parent;
+    }
+
+    if (y->parent == NULL)
+    {
+        *tree = x;
+    }
+    else if (y == y->parent->left)
+    {
+        y->parent->left = x;
+    }
+    else
+    {
+        y->parent->right = x;
+    }
+
+    if (y != z)
+    {
+        z->key = y->key;
+    }
+
+    free(y);
+}
+
+void search(Node *tree, int key)
+{
+    Node *current = tree;
+    while (current != NULL)
+    {
+        if (current->key == key)
+        {
+            printf("Found %d\n", current->key);
+            return;
+        }
+        else if (key < current->key)
+        {
+            current = current->left;
+        }
+        else
+        {
+            current = current->right;
+        }
+    }
+    printf("Not found\n");
+}
+
+void main()
+{
+    Node *tree = NULL;
+
+    insert(&tree, 9);
+    insert(&tree, 3);
+    insert(&tree, 5);
+    insert(&tree, 8);
+    insert(&tree, 1);
+    insert(&tree, 4);
+    insert(&tree, 7);
+
+    printTree(tree);
+
+    search(tree, 3);
+    search(tree, 6);
+
+    delete (&tree, 3);
+    search(tree, 3);
+}
 \end{lstlisting}
 
 \subsection{プログラムの特徴}
+このプログラムは，二分探索木を実装したものである．
+二分探索木は，各ノードが左の子ノードよりも大きく，右の子ノードよりも小さい値を持つ木構造である．
+node構造体は，キーと親ノードを指すポインタ，左の子ノードを指すポインタ，右の子ノードを指すポインタを持つ．
+基本操作は，printTreeで木を出力，insertでノードを挿入，deleteでノードを削除，searchでノードを検索する．
+
+insertでは，新しいノードを挿入するために，まずルートから葉までたどり，挿入位置を探す．
+deleteでは，削除するノードを探し，そのノードを削除する．
+削除した後は，削除したノードの子ノードを適切な位置に移動させる．
+searchでは，指定されたキーのノードを探し，そのノードを出力する．
 
 \subsection{まとめ}
+二分探索木は，各ノードが左の子ノードよりも大きく，右の子ノードよりも小さい値を持つ木構造である．
+二分探索木は，探索が$O(\log n)$で行えるため，データの検索が高速である．
+また，二分探索木は，挿入，削除が$O(\log n)$で行えるため，データの追加，削除が高速である．
 
-// 参考文献，リンク付き
+二分探索木は効率的な探索をすることができたり，順序付きデータの管理をすることができたりする．
+応用例を紹介すると，データベースのインデックスや，ファイルシステム，プライオリティキューなどがあげられる．
+
 \begin{thebibliography}{9}
-%   \bibitem{online1} BohYoh.com, ``BohYoh.com【著書】Ｃ言語によるアルゴリズムとデータ構造《演習問題5-6の解答》'', \url{https://www.bohyoh.com/Books/CalgoA/EX/ALGOEX0506.html}, (参照 2024-12-18).
-%   \bibitem{book2} 基本情報技術者試験 受験ナビ，``逆ポーランド記法 _ やさしい基礎理論 _ 基本情報技術者試験 受験ナビ｜科目A・科目B対策から過去問解説まで 250本以上の記事を掲載''，\url{https://www.seplus.jp/dokushuzemi/ec/fe/fenavi/kind_basic_theory/reverse-polish-notation/}，(参照 2024-12-18).
-%   \bibitem{book3} 本の名前，著者，出版社，出版年
+  \bibitem{online1} BohYoh.com【著書】Ｃ言語によるアルゴリズムとデータ構造《演習問題5-6の解答》， \url{https://www.bohyoh.com/Books/CalgoA/EX/ALGOEX0506.html}, (参照 2024-12-18).
+  \bibitem{online2} 逆ポーランド記法｜やさしい基礎理論 | 基本情報技術者試験 受験ナビ，\url{https://www.seplus.jp/dokushuzemi/ec/fe/fenavi/kind_basic_theory/reverse-polish-notation/}，(参照 2024-12-18).
+  \bibitem{online3} 探索木とは？種類とアルゴリズムや応用例をわかりやすく解説，\url{https://jitera.com/ja/insights/52311}，(参照 2024-12-23).
+  \bibitem{book1} T.コルメン・C.ライザーソン・他，アルゴリズムとイントロダクション 第 4 版，p210～p229，2023
 \end{thebibliography}
 \end{document}
