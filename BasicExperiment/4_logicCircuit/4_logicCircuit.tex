@@ -21,7 +21,7 @@
 \subsection{ディジタル信号処理と論理素子}
 ディジタル信号処理を行うデバイスは多岐にわたるが，その主要部分は論理回路である．
 つまり，二値論理とそれを実行する論理素子からなる．
-論理素子の実態は電磁リレーや真空管ｋバイポーラトランジスタなどの連続した入出力特性を持つスイッチング回路である．
+論理素子の実態は電磁リレーや真空管，バイポーラトランジスタなどの連続した入出力特性を持つスイッチング回路である．
 そして，素子ごとに固有の電気的，時間的特性を持つ．
 このため，高速な動作を行うディジタル信号処理回路を設計・作製するためにはこれらの特性を考慮する必要がある．
 
@@ -103,8 +103,72 @@
   \item 間にはタクトスイッチを挟んだ．
   \item タクトスイッチが推されている間，LED がルーレットのように点滅し，スイッチをオフにすると4つのLEDのうち1つのLEDのみが点灯することを確認し，記録した．
 \end{itemize}
+
 \subsection{結果}
-% 実験結果を記述
+\subsubsection{実験課題1}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+コンデンサ[${\mu F}$] & 遅延時間[${ms}$] \\ \hline
+4.7 & 7.62  \\ \hline
+0.47 & 5.56 \\ \hline
+\end{tabular}
+\caption{ファンクションジェネレータを利用したリングオシレータのコンデンサと遅延時間の関係}
+\label{tab:results}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{figs/1-4700nF.png}
+\caption{4.7 $\mu$F のコンデンサを用いたリングオシレータの波形}
+\label{fig:experiment_results}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/1-470mF.png}
+  \caption{470 nF のコンデンサを用いたリングオシレータの波形}
+  \label{fig:experiment_results}
+  \end{figure}
+
+\subsubsection{実験課題2}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|c|c|}
+  \hline
+  コンデンサ[${\mu F}$] & 遅延時間[${ms}$] \\ \hline
+  4.7 & 16.7  \\ \hline
+  0.47 & 1.77 \\ \hline
+  \end{tabular}
+  \caption{リングオシレータのコンデンサと遅延時間の関係}
+  \label{tab:results}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/2-4700nF.png}
+  \caption{4.7 $\mu$F のコンデンサを用いたリングオシレータの波形}
+  \label{fig:experiment_results}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/2-470nF.png}
+  \caption{470 nF のコンデンサを用いたリングオシレータの波形}
+  \label{fig:experiment_results}
+\end{figure}
+
+\subsubsection{実験課題3}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/3-flipflop.png}
+  \caption{2ビット4進非同期カウンタ回路の波形}
+  \label{fig:experiment_results}
+\end{figure}
+
+\subsubsection{実験課題4}
+LEDの光る順番は LED4, LED3, LED2, LED1 であった．
 
 \section{考察}
 % 実験結果の考察を記述
