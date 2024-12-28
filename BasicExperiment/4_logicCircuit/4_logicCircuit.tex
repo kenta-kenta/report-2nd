@@ -115,21 +115,21 @@
 0.47 & 5.56 \\ \hline
 \end{tabular}
 \caption{ファンクションジェネレータを利用したリングオシレータのコンデンサと遅延時間の関係}
-\label{tab:results}
+\label{tab:results_1}
 \end{table}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{figs/1-4700nF.png}
 \caption{4.7 $\mu$F のコンデンサを用いたリングオシレータの波形}
-\label{fig:experiment_results}
+\label{fig:1_4.7_experiment_results}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{figs/1-470mF.png}
   \caption{470 nF のコンデンサを用いたリングオシレータの波形}
-  \label{fig:experiment_results}
+  \label{fig:1_470_experiment_results}
   \end{figure}
 
 \subsubsection{実験課題2}
@@ -142,21 +142,21 @@
   0.47 & 1.77 \\ \hline
   \end{tabular}
   \caption{リングオシレータのコンデンサと遅延時間の関係}
-  \label{tab:results}
+  \label{tab:results_2}
 \end{table}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{figs/2-4700nF.png}
   \caption{4.7 $\mu$F のコンデンサを用いたリングオシレータの波形}
-  \label{fig:experiment_results}
+  \label{fig:2_4.7_experiment_results}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{figs/2-470nF.png}
   \caption{470 nF のコンデンサを用いたリングオシレータの波形}
-  \label{fig:experiment_results}
+  \label{fig:2_470_experiment_results}
 \end{figure}
 
 \subsubsection{実験課題3}
@@ -164,14 +164,80 @@
   \centering
   \includegraphics[width=0.8\textwidth]{figs/3-flipflop.png}
   \caption{2ビット4進非同期カウンタ回路の波形}
-  \label{fig:experiment_results}
+  \label{fig:3_experiment_results}
 \end{figure}
 
 \subsubsection{実験課題4}
-LEDの光る順番は LED4, LED3, LED2, LED1 であった．
+LEDの光る順番は LED4 → LED3 → LED2 → LED1 → LED4 → ・・・ となった．
 
 \section{考察}
-% 実験結果の考察を記述
+\subsection{基本課題(1) インバータIC回路}
+表\ref{tab:results_1}より，コンデンサの容量が大きいほど遅延時間が大きくなることがわかる．
+これは，コンデンサの容量が大きいほど，充放電にかかる時間が大きくなるためである．
+
+\subsection{基本課題(2) リングオシレータ}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+コンデンサ[${\mu F}$] & 伝達遅延時間[${ms}$] & 全体の伝達遅延時間[${ms}$] & 発振周波数[${Hz}$] \\ \hline
+4.7 & 16.7 & 50.1 & 38.9  \\ \hline
+0.47 & 1.77 & 5.31 & 379 \\ \hline
+\end{tabular}
+\caption{リングオシレータのコンデンサと遅延時間，発振周波数の関係}
+\label{tab:discussion_results}
+\end{table}
+
+表\ref{tab:discussion_results}より，コンデンサの容量が大きいほど遅延時間が大きくなり，発振周波数が小さくなることがわかる．
+これは，コンデンサの容量が大きいほど，充放電にかかる時間が大きくなるためである．
+つまり，発振周波数をより早くするためには，コンデンサの容量を小さくする必要がある．
+
+\subsection{基本課題(3) 2ビット4進非同期カウンタ回路}
+図\ref{fig:3_experiment_results}より，2ビット4進非同期カウンタ回路の波形が正常に動作していることがわかる．
+この回路が2ビット4進カウンタになることを説明する．
+この回路は，2つのDフリップフロップを用いて，2ビットのカウンタを実装している．
+このカウンタは，クロック信号が入力されるたびに，カウンタが1つ進む．
+図\ref{fig:3_experiment_results}より，Q1, Q2の値が変化していて，4つの状態を持つことがわかる．
+以上より，この回路は2ビット4進カウンタになることがわかる．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/ringosilator.png}
+  \caption{2ビット4進非同期カウンタ回路の波形}
+  \label{fig:3_experiment_results}
+\end{figure}
+
+\subsection{基本課題(4) LED用デコーダ回路及び電子ルーレット}
+2ビット4進非同期カウンタ回路とデコーダ回路で電子ルーレットになる仕組みについて述べる．
+先述のとおり，2ビット4進非同期カウンタ回路は，2ビットのカウンタを実装している．
+つまり，4つの状態を持ち，クロック信号が入力されるたびに，1つの状態に進む．
+このカウンタの出力をデコーダ回路に入力すると，4つの状態を表す信号が1つだけハイレベルになる．
+この信号をLEDに入力することで，LEDが点灯する．
+このため，この回路は，4つのLEDのうち1つのLEDのみが点灯する電子ルーレットとなる．
+
+\vspace{\baselineskip}
+次にLEDの光る順番について考察する．
+この回路は，2ビット4進非同期カウンタ回路を用いているため，4つの状態を持つ．
+\begin{itemize}
+  \item LED1は，$\overline{Q_2}$と$\overline{Q_1}$の論理和である．
+  \item LED2は，$\overline{Q_2}$と${Q_1}$の論理和である．
+  \item LED3は，${Q_2}$と$\overline{Q_1}$の論理和である．
+  \item LED4は，${Q_2}$と${Q_1}$の論理和である．
+\end{itemize}
+${Q_2}$の値が1のとき，${Q_1}$の値は0から1に変化する．
+その後，${Q_2}$の値が0になり，${Q_1}$の値は1から0に変化する．
+このため，LEDの光る順番は，LED4 → LED3 → LED2 → LED1 → LED4 → ・・・ となる．
+
+\vspace{\baselineskip}
+次にLEDがルーレットのように光る間隔とリングオシレーターが作るクロック信号及びFGの波形の周波数との関係について考察する．
+リングオシレーターは，クロック信号を入力すると，その周波数に合わせて発振する．
+このため，リングオシレーターの周波数が高いほど，LEDがルーレットのように光る間隔が速くなる．
+また，リングオシレーターの周波数が低いほど，LEDがルーレットのように光る間隔が遅くなる．
+
+\subsection{基本課題(5)}
+デジタルICとして，携帯電話(スマートフォン)に用いられている．ICチップの大幅な削減や，機器の小型化，省電力化に貢献している．
+また，デジタルICは，高速な動作が可能であるため，高速なデータ処理が可能である．
+これにより，高速なデータ通信や，高速な画像処理が可能になっている．
+% デジタルICについて参照を書く
 
 \begin{thebibliography}{9}
 \bibitem{reference1} \url{https://example.com/reference1}
