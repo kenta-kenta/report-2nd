@@ -1,8 +1,8 @@
 # Fdb version 4
-["lualatex"] 1735397099.92267 "c:/Users/kenke/Latex/BasicExperiment/4_logicCircuit/4_logicCircuit.tex" "4_logicCircuit.pdf" "4_logicCircuit" 1735397103.18624 0
-  "4_logicCircuit.aux" 1735397102 6441 9e6ab128db82ec0c53f94d3e09dde968 "lualatex"
-  "4_logicCircuit.out" 1735397102 1765 592e2e04e26648f4ae1c4b61c1a545c6 "lualatex"
-  "4_logicCircuit.tex" 1735397094 12503 b71ed279be3018b773536df68f797b26 ""
+["lualatex"] 1735470568.26865 "c:/Users/kenke/Latex/BasicExperiment/4_logicCircuit/4_logicCircuit.tex" "4_logicCircuit.pdf" "4_logicCircuit" 1735470572.17672 0
+  "4_logicCircuit.aux" 1735470571 6441 246434d8ad39717a5e4db8eee5b5c8eb "lualatex"
+  "4_logicCircuit.out" 1735470571 1765 592e2e04e26648f4ae1c4b61c1a545c6 "lualatex"
+  "4_logicCircuit.tex" 1735397181 12506 35c9b5d8bd4b9d2df009f76a515b0ced ""
   "C:/Users/kenke/.texlive2024/texmf-var/luatexja/extra_haranoajigothic-medium.luc" 1731420146 321567 74d040fc121dbd1db09abc7818d66f6a ""
   "C:/Users/kenke/.texlive2024/texmf-var/luatexja/extra_haranoajimincho-regular.luc" 1731420142 322628 d20d2b7ca7b1a61c1e1d00b80dffeaaf ""
   "C:/Users/kenke/.texlive2024/texmf-var/luatexja/extra_lmmono10-regular.luc" 1731991225 16824 949d1f56cde7c6f53ac0413c12215341 ""
@@ -29,7 +29,7 @@
   "C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmsans10-regular.luc" 1732349857 127638 735802285606482aefe029a7cf740ad5 ""
   "C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmsans12-regular.luc" 1731420147 128157 918cd5261c55e64d1941ff15541bf36b ""
   "C:/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz" 1731420136 79232 546b35d22f69b9797c859f9853896a7c ""
-  "c:/Users/kenke/Latex/BasicExperiment/4_logicCircuit/4_logicCircuit.tex" 1735397094 12503 b71ed279be3018b773536df68f797b26 ""
+  "c:/Users/kenke/Latex/BasicExperiment/4_logicCircuit/4_logicCircuit.tex" 1735397181 12506 35c9b5d8bd4b9d2df009f76a515b0ced ""
   "c:/texlive/2024/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf" 1731417642 4741344 b4cb653e8a646847598c1b41780451dc ""
   "c:/texlive/2024/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf" 1731417642 6420628 de3818622611c4aa9412be05bfa54ad6 ""
   "c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf" 1731417907 64684 c6f5a48921f83c1a51d9384f785ddd5a ""
