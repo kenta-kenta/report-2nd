@@ -86,12 +86,26 @@
   \item 各段のコンデンサを変更して同様に測定した．
 \end{itemize}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/RingOsilatorProcedure.png}
+  \caption{リングオシレータ実験．(a) 負荷素子を含む単一インバータ遅延回路と実験セットアップ．(b) インバータ IC のピン接続図と素子の真理値表．(c) 三段のリングオシレータ回路．}
+  \label{fig:ringosilator}
+\end{figure}
+
 \subsubsection{Dフリップフロップを用いた2ビット4進非同期カウンタ回路}
 \begin{itemize}
   \item ブレッドボード上に2ビットカウンタ回路をロジックIC(エッジトリガ型Dフリップフロップ)を用いて実装した．
   \item ファンクションジェネレータ(f = 1 kHz, Vpp = 5 V, offset = 2.5 V の方形波)をクロック信号CLKとして用いて駆動させた．
   \item Q1, Q2 およびクロック CLK を観測して記録した．
 \end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/DFlipFropProcedure.png}
+  \caption{Dフリップフロップによる非同期カウンタ実験．(a) 2ビット4進非同期カウンタ回路．(b) エッジトリガ型Dフリップフロップ IC のピン接続図と素子の真理値表．}
+  \label{fig:2bit4counter}
+\end{figure}
 
 \subsubsection{2ビットデコーダ回路によるLEDルーレット}
 \begin{itemize}
@@ -106,6 +120,13 @@
   \item 間にはタクトスイッチを挟んだ．
   \item タクトスイッチが推されている間，LED がルーレットのように点滅し，スイッチをオフにすると4つのLEDのうち1つのLEDのみが点灯することを確認し，記録した．
 \end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/DecorderProcedure.png}
+  \caption{デコーダ回路によるLEDルーレット実験．(a) 2ビットデコーダとLED回路．(b) デコーダ回路の真理値表と論理関数．(c) 2入力論理和 IC のピン接続図と素子の真理値表．(d) 電子ルーレットシステム全体の回路図}
+  \label{fig:LED}
+\end{figure}
 
 \subsection{結果}
 \subsubsection{実験課題1}
@@ -204,7 +225,7 @@ LEDの光る順番は LED4 → LED3 → LED2 → LED1 → LED4 → ・・・ と
 以上より，この回路は2ビット4進カウンタになることがわかる．
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{figs/ringosilator.png}
+  \includegraphics[width=0.6\textwidth]{figs/ringosilator.png}
   \caption{2ビット4進非同期カウンタ回路の波形}
   \label{fig:3_experiment_results}
 \end{figure}
@@ -237,13 +258,15 @@ ${Q_2}$の値が1のとき，${Q_1}$の値は0から1に変化する．
 また，リングオシレーターの周波数が低いほど，LEDがルーレットのように光る間隔が遅くなる．
 
 \subsection{基本課題(5)}
-デジタルICとして，携帯電話(スマートフォン)に用いられている．ICチップの大幅な削減や，機器の小型化，省電力化に貢献している．
-また，デジタルICは，高速な動作が可能であるため，高速なデータ処理が可能である．
-これにより，高速なデータ通信や，高速な画像処理が可能になっている．
-% デジタルICについて参照を書く
+デジタルICは，スマートフォンの中で重要な役割をはたしている．具体的には，スマートフォンの中央処理装置(CPU)として使用されている．
+CPUは，スマートフォンのアプリケーションの実行やシステム全体の管理を行う「頭脳」の役割をになっている．
+このデジタルICは，高速で複雑な演算処理を行い，ユーザーの操作に応じてアプリケーションを起動したり，データを処理したりする．
+また，CPUは電気の流れを高速でオン・オフすることでデジタル信号を処理し，スマートフォンの様々な機能を制御しています．これにより，ユーザーは滑らかな操作感覚でスマートフォンを使用することができ，多様なアプリケーションや機能を利用することが可能となっています．
 
 \begin{thebibliography}{9}
-\bibitem{reference1} \url{https://example.com/reference1}
+  \bibitem{reference1} 【基礎実験】4.論理回路(テキスト資料，説明資料)
+  \bibitem{reference1} \url{https://www.y-skt.co.jp/magazine/knowledge/guide-semicon/}
+  \bibitem{reference1} \url{https://jobpal.jp/contents/column/trivia/001/}
 \end{thebibliography}
 
 \end{document}

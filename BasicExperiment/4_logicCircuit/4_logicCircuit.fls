@@ -200,8 +200,14 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT ./figs/RingOsilatorProcedure.png
+INPUT ./figs/RingOsilatorProcedure.png
 INPUT C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman9-regular.luc
 INPUT C:/Users/kenke/.texlive2024/texmf-var/luatexja/extra_lmroman9-regular.luc
+INPUT ./figs/DFlipFropProcedure.png
+INPUT ./figs/DFlipFropProcedure.png
+INPUT ./figs/DecorderProcedure.png
+INPUT ./figs/DecorderProcedure.png
 INPUT ./figs/1-4700nF.png
 INPUT ./figs/1-4700nF.png
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
@@ -225,4 +231,5 @@ INPUT ./4_logicCircuit.out
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb
+INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
