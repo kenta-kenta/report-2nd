@@ -1,0 +1,503 @@
+\documentclass{ltjsarticle}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{データ構造とアルゴリズム演習}
+\author{1TE23035E 平野 健汰}
+\date{\today}
+
+\maketitle
+
+はじめに今回作成したコードはgithubにアップロードしています．以下のリンクからアクセスできます．
+\url{https://github.com/kenta-kenta/clang-algorithm}
+
+\part{文字列照合}
+\section{6.1-A}
+\subsection{概要}
+与えられた文書の中に指定した文字列の出現回数を求めるプログラム
+\subsection{仕様}
+\begin{itemize}
+  \item 全照合成功数を表示
+  \item text 上の全照合成功位置情報を表示
+\end{itemize}
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+#include <stdio.h>
+
+#define CHARS 256
+
+void report(char text[], long pos)
+{
+    printf("matched at text[%ld], after %ld comparisons.\n", pos, pos);
+}
+
+void naive_match
+  (char pattern[], long psize, char text[], long tsize, int *matches)
+{
+    long anchor, pix;
+    printf("pattern size = %ld, text size = %ld.\n", psize, tsize);
+    long comps = 0;
+    for (anchor = 0; anchor <= tsize - psize; anchor++)
+    {
+        for (pix = 0; pix < psize; pix++)
+        {
+            comps++;
+            if (pattern[pix] != text[anchor + pix])
+                break;
+        }
+        if (pix >= psize)
+        {
+            (*matches)++;
+            report(text, anchor);
+        }
+    }
+}
+
+int main()
+{
+    char text[] = "abracadabra";
+    char pattern[] = "abr";
+    int matches = 0;
+    naive_match(pattern, 3, text, 11, &matches);
+    printf("matches = %d\n", matches);
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+naive\_match関数は，テキストとパターンの照合を行う関数である．
+引数として，比較するパターンとそのサイズ，比較するテキストとそのサイズ，照合成功数を格納する変数へのポインタを受け取る．
+この関数は，テキストの先頭からパターンの長さだけずらしながらパターンとテキストを比較し，パターンとテキストが一致した場合には，report関数を呼び出して，照合に成功した位置を表示する．
+この関数は全探索を行うため，計算量は$O(nm)$である．(n: テキストの長さ，m: パターンの長さ)
+
+\section{6.1-B}
+\subsection{概要}
+与えられた文書の中に指定した文字列の出現回数を求めるプログラム（Boyer-Moore-Horspool）
+
+\subsection{仕様}
+\begin{itemize}
+  \item 全照合成功数を表示
+  \item text 上の全照合成功位置情報を表示
+\end{itemize}
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+#include <stdio.h>
+
+#define CHARS 256
+
+void report(char text[], long pos)
+{
+    printf("matched at text[%ld], after %ld comparisons.\n", pos, pos);
+}
+
+void make_bmh_table(long table[], char pattern[], long psize)
+{
+    long pix;
+    for (pix = 0; pix < CHARS; pix++)
+    {
+        table[pix] = psize;
+    }
+    for (pix = 0; pix < psize - 1; pix++)
+    {
+        table[pattern[pix]] = psize - pix - 1;
+    }
+}
+
+void bmh_match(char pattern[], long psize, char text[], long tsize)
+{
+    long table[CHARS]; // text上の文字に対する適切なシフト量
+    long pix, anchor, tix;
+    char c;
+    printf("pattern size = %d, text size = %d.\n", psize, tsize);
+    make_bmh_table(table, pattern, psize); // テーブルの作成
+    int comps = 0;
+    anchor = 0;
+    while (anchor <= tsize - psize)
+    {
+        tix = anchor + psize - 1;
+        c = text[tix];
+        for (pix = psize - 1; pix >= 0; pix--)
+        {
+            comps++;
+            if (pattern[pix] != text[tix])
+                break;
+            tix--;
+        }
+        if (pix < 0)
+        {
+            report(text, anchor);
+        }
+        anchor += table[c]; // シフト
+    }
+}
+
+int main()
+{
+    char text[] = "abracadabra";
+    char pattern[] = "abr";
+    int matches = 0;
+    naive_match(pattern, 3, text, 11, &matches);
+    printf("matches = %d\n", matches);
+    bmh_match(pattern, 3, text, 11);
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このコードはBoyer-Moore-Horspool法を用いて，テキストとパターンの照合を行うプログラムである．
+Boyer-Moore-Horspool法は，パターンの末尾から先頭に向かって比較を行うことで，比較回数を減らすことができる．
+
+make\_bmh\_table関数は，テーブルを作成する関数である．このテーブルは，テキスト上の文字に対して，適切なシフト量を格納する．
+パターンの各文字のASCIIコードをインデックスとして，パターンの末尾からその文字までの距離を格納する．
+パターンの文字以外の文字に対しては，パターンの長さを格納する．
+
+bmh\_match関数では，まず，テーブルを作成するmake\_bmh\_table関数を呼び出す．
+テキスト内でパターンをずらしながら比較を行い，パターンとテキストが一致した場合には，report関数を呼び出して，照合に成功した位置を表示する．
+
+\section{まとめ}
+文字列の照合を行うプログラムを作成した．
+naive\_match関数は，全探索を行うため，計算量は$O(nm)$である．
+bmh\_match関数は，Boyer-Moore-Horspool法を用いて，比較回数を減らすことができる．
+Boyer-Moore-Horspool法は，最悪計算量が$O(nm)$であるが，平均計算量は$O(n/m)$であるため，パターンが長い場合には高速に動作する．
+
+\part{根付き木}
+\section{深さ優先探索}
+\subsection{概要}
+有向グラフの隣接行列を入力として始点から指定の点の経路を深さ優先探索で求めるプログラム
+
+\subsection{仕様}
+\begin{itemize}
+  \item 始点から指定の点までの経路を表示
+  \item 始点から指定の点までの最短経路を表示
+\end{itemize}
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+#include <stdio.h>
+#include <stdlib.h> // malloc, free, exit, EXIT_FAILURE
+#include <limits.h> // INT_MAX
+
+#define MAX_PATH 100
+
+char *visited = NULL;
+int nvertices = 7;
+char amat[][7] = {
+    {0, 1, 1, 1, 0, 0, 0},
+    {1, 0, 0, 0, 1, 1, 0},
+    {1, 0, 0, 1, 0, 1, 0},
+    {1, 0, 1, 0, 0, 0, 0},
+    {0, 1, 0, 0, 0, 1, 1},
+    {0, 1, 1, 0, 1, 0, 0},
+    {0, 0, 0, 0, 1, 0, 0}};
+
+char amatrix(int i, int j)
+{
+    return amat[i][j];
+}
+
+// グローバル変数：最短経路の記録
+int bestPath[MAX_PATH];
+int bestPathLen = INT_MAX;
+
+// 現在の経路を表示するユーティリティ
+void printPath(int path[], int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        printf("%d ", path[i]);
+    }
+    printf("\n");
+}
+
+void dfsearch_rec(int current, int dest, int dp, int currPath[])
+{
+    currPath[dp] = current; // 現在の頂点を経路に追加
+    dp++;                   // 経路長を更新
+
+    // 目的地に到達した場合
+    if (current == dest)
+    {
+        printf("Found path: ");
+        printPath(currPath, dp);
+        // 最短経路の更新（複数あればどれか一つでよい）
+        if (dp < bestPathLen)
+        {
+            bestPathLen = dp;
+            for (int i = 0; i < dp; i++)
+                bestPath[i] = currPath[i];
+        }
+        return;
+    }
+    // 再帰的に隣接頂点へ探索
+    for (int i = 0; i < nvertices; i++)
+    {
+        if (amatrix(current, i) == 1 && visited[i] == 0)
+        {
+            visited[i] = 1;
+            dfsearch_rec(i, dest, dp, currPath);
+            visited[i] = 0; // バックトラック
+        }
+    }
+}
+
+// dfsearch:
+// 初期状態の visited 配列の確保、初期化を行い、dfsearch_rec を呼び出す。
+void dfsearch(int v1, int v2)
+{
+    int i;
+    // visited の確保と初期化
+    visited = (char *)malloc(sizeof(char) * nvertices);
+    if (visited == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    for (i = 0; i < nvertices; i++)
+        visited[i] = 0;
+    visited[v1] = 1;
+
+    // 最短経路の初期化
+    bestPathLen = INT_MAX;
+    int currPath[MAX_PATH];
+
+    printf("Starting at vertex %d,\n", v1);
+    dfsearch_rec(v1, v2, 0, currPath);
+
+    if (bestPathLen != INT_MAX)
+    {
+        printf("Shortest path: ");
+        printPath(bestPath, bestPathLen);
+    }
+    else
+    {
+        printf("No path found from %d to %d.\n", v1, v2);
+    }
+    free(visited);
+}
+
+int main()
+{
+    // 既存の dfsearch（今回、全経路探索と最短経路更新を行う）
+    printf("DFsearch (all paths and the shortest path):\n");
+    dfsearch(0, 6);
+
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，有向グラフの隣接行列を入力として，深さ優先探索を行うプログラムである．
+プログラムは，再帰関数dfsearch\_recとそのラッパー関数dfsearchから構成されている．
+
+dfsearch関数は，深さ優先探索を行う関数である．
+引数は，始点と目的地の頂点番号である．
+この関数は，始点から目的地までの経路を再帰的に探索する．
+探索中に通過した頂点をvisited配列に記録し，目的地に到達した場合には，その経路を表示する．
+
+dfsearch\_rec関数は，深さ優先探索を再帰的に行う関数である．
+引数は，現在の頂点，目的地の頂点，経路長，現在の経路である．
+この関数は，現在の頂点から隣接する頂点を探索し，目的地に到達した場合には，その経路を表示する．
+また，最短経路を更新する．
+
+\section{幅優先探索}
+\subsection{概要}
+有向グラフの隣接行列を入力として始点から指定の点の経路を幅優先探索で求めるプログラム
+
+\subsection{仕様}
+\begin{itemize}
+    \item 始点から指定の点までの経路を表示
+    \item 始点から指定の点までの最短経路を表示
+\end{itemize}
+
+\subsection{コード}
+\begin{lstlisting}[frame=single, lineskip=-5pt]
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <stdbool.h>
+
+#define MAX_PATH 100
+#define MAX_QUEUE_SIZE 1000
+
+int nvertices = 7;
+char amat[][7] = {
+    {0, 1, 1, 1, 0, 0, 0},
+    {1, 0, 0, 0, 1, 1, 0},
+    {1, 0, 0, 1, 0, 1, 0},
+    {1, 0, 1, 0, 0, 0, 0},
+    {0, 1, 0, 0, 0, 1, 1},
+    {0, 1, 1, 0, 1, 0, 0},
+    {0, 0, 0, 0, 1, 0, 0}};
+
+char amatrix(int i, int j)
+{
+    return amat[i][j];
+}
+
+/* Path構造体: 経路（頂点列）を保持 */
+typedef struct
+{
+    int vertices[MAX_PATH];
+    int len;
+} Path;
+
+/* Queue構造体: Pathへのポインタを管理 */
+typedef struct
+{
+    Path *items[MAX_QUEUE_SIZE];
+    int front;
+    int rear;
+} Queue;
+
+void initQueue(Queue *q)
+{
+    q->front = 0;
+    q->rear = 0;
+}
+
+bool isEmpty(Queue *q)
+{
+    return q->front == q->rear;
+}
+
+bool enqueue(Queue *q, Path *p)
+{
+    if (q->rear >= MAX_QUEUE_SIZE)
+        return false;
+    q->items[q->rear++] = p;
+    return true;
+}
+
+Path *dequeue(Queue *q)
+{
+    if (isEmpty(q))
+        return NULL;
+    return q->items[q->front++];
+}
+
+/* 経路に頂点が含まれているかを確認（サイクル防止用） */
+bool inPath(Path *p, int vertex)
+{
+    for (int i = 0; i < p->len; i++)
+    {
+        if (p->vertices[i] == vertex)
+            return true;
+    }
+    return false;
+}
+
+void printPath(Path *p)
+{
+    for (int i = 0; i < p->len; i++)
+    {
+        printf("%d ", p->vertices[i]);
+    }
+    printf("\n");
+}
+
+/* グローバル変数: 最短経路の記録 */
+int bestPathLen = INT_MAX;
+Path bestPath;
+
+/* main関数内の処理を分離した runBFS 関数 */
+void runBFS()
+{
+    int start = 0, dest = 6;
+    bestPathLen = INT_MAX;
+
+    Queue q;
+    initQueue(&q);
+
+    /* 初期経路の作成 */
+    Path *initPath = (Path *)malloc(sizeof(Path));
+    initPath->len = 0;
+    initPath->vertices[initPath->len++] = start;
+    enqueue(&q, initPath);
+
+    while (!isEmpty(&q))
+    {
+        Path *curr = dequeue(&q);
+        int last = curr->vertices[curr->len - 1];
+
+        /* 目的地に到達した場合 */
+        if (last == dest)
+        {
+            printf("Found path: ");
+            printPath(curr);
+            if (curr->len < bestPathLen)
+            {
+                bestPathLen = curr->len;
+                bestPath = *curr; // 構造体のコピー（配列も含む）
+            }
+        }
+
+        /* 既に最短経路が見つかっていれば、それ以上伸ばさない */
+        if (curr->len < bestPathLen - 1)
+        {
+            /* 隣接頂点でかつ、サイクルにならないものを拡張 */
+            for (int i = 0; i < nvertices; i++)
+            {
+                if (amatrix(last, i) == 1 && !inPath(curr, i))
+                {
+                    Path *newPath = (Path *)malloc(sizeof(Path));
+                    newPath->len = curr->len;
+                    for (int j = 0; j < curr->len; j++)
+                    {
+                        newPath->vertices[j] = curr->vertices[j];
+                    }
+                    newPath->vertices[newPath->len++] = i;
+                    enqueue(&q, newPath);
+                }
+            }
+        }
+        free(curr);
+    }
+
+    if (bestPathLen != INT_MAX)
+    {
+        printf("Shortest path: ");
+        for (int i = 0; i < bestPathLen; i++)
+        {
+            printf("%d ", bestPath.vertices[i]);
+        }
+        printf("\n");
+    }
+    else
+    {
+        printf("No path found from %d to %d\n", start, dest);
+    }
+}
+
+int main()
+{
+    runBFS();
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{プログラムの特徴}
+このプログラムは，有向グラフの隣接行列を入力として，幅優先探索を行うプログラムである．
+プログラムは，キューを用いて幅優先探索を行う．
+
+runBFS関数は，幅優先探索を行う関数である．
+この関数は，始点から目的地までの最短経路を探索する．
+キューには，現在の経路を保持するPath構造体へのポインタを格納する．
+キューから取り出した経路に隣接する頂点を探索し，目的地に到達した場合には，その経路を表示する．
+また，最短経路を更新する．
+
+\section{まとめ}
+深さ優先探索と幅優先探索を行うプログラムを作成した．
+深さ優先探索は，再帰を用いて実装し，幅優先探索は，キューを用いて実装した．
+深さ優先探索と幅優先探索の違いを説明する．
+深さ優先探索は，スタックを用いて実装することもできるが，再帰を用いることで簡潔に実装できる．
+幅優先探索は，キューを用いて実装することで，最短経路を求めることができる．
+深さ優先探索は全探索や木構造の探索に適している．
+幅優先探索は最短経路を求めることができるため，最短経路問題に適している．
+
+\end{document}
